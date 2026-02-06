@@ -3,7 +3,7 @@
 ## 📌 Project Description
 The Automated Floodgate and Monitoring System (AFMS) is an IoT-based application designed to monitor real-time water levels and allow homeowners to control a smart floodgate system. 
 
-The system integrates Flutter (mobile/web app), IoT sensors, and cloud computing to provide real-time data monitoring, alerts, and recommended actions during rising water levels.
+The system integrates Flutter mobile app IoT sensors, and cloud computing to provide real-time data monitoring, alerts, and recommended actions during rising water levels.
 
 This prototype is demonstrated using a micro-scale diorama setup (riverbed and neighborhood model with automated gate).
 
