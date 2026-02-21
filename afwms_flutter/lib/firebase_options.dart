@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'afwms-d3141.firebasestorage.app',
     measurementId: 'G-8GNHSMDBT5',
   );
+
 }
