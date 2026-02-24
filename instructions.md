@@ -1,0 +1,86 @@
+# AFWMS (Flutter Project) Setup Guide
+
+This is the step-by-step guide to set up and run the project smoothly after cloning. Follow the steps below so we don't miss any dependencies.
+
+## 📝 Prerequisites
+Before we start, make sure you have the following installed on your machine:
+- **Git** (for cloning)
+- **Flutter SDK** (v3.10.4 or higher) - [Download here](https://docs.flutter.dev/get-started/install)
+- **Dart SDK** (Included when you install Flutter)
+- **Code Editor** (VS Code, Android Studio, or IntelliJ)
+- **Firebase Account** (if we are using it for backend/auth)
+
+---
+
+## 🚀 Setup Instructions
+
+### 1. Clone the Repository
+First, clone the repo to your local machine:
+```bash
+git clone <insert-repo-url-here>
+cd AFWMS
+```
+
+### 2. Install Dependencies
+We need to download the packages used in the project (like firebase, cupertino icons, etc.):
+```bash
+flutter pub get
+```
+
+### 3. Firebase Setup (Important!)
+Since we use Firebase authentication and Firestore, we need to connect the app to the Firebase project. The Firebase configuration files are not included in the GitHub repo (they are in `.gitignore`), so each teammate needs to generate them locally.
+
+**a. Install FlutterFire CLI**
+If you don't have FlutterFire CLI installed globally yet, run:
+```bash
+dart pub global activate flutterfire_cli
+```
+*(Note: If you see a warning that it's not in your `PATH` environment variable, add the path it provides to your system environment variables.)*
+
+**b. Login to Firebase**
+Before configuring, you must be logged into your Firebase account:
+```bash
+firebase login
+```
+
+**c. Configure Firebase**
+To generate the missing `firebase_options.dart` file (where errors often occur when missing):
+```bash
+flutterfire configure --project=afwms-d3141
+```
+This will connect to Firebase using the specific project id used in the app. After this, the `lib/firebase_options.dart` file will be generated automatically.
+
+### 4. Run the App
+Once the dependencies and Firebase configuration are okay, we can test the app!
+
+If you want to see the list of available devices:
+```bash
+flutter devices
+```
+
+To run the app:
+- **Chrome (Web):** `flutter run -d chrome`
+- **Windows (Desktop):** `flutter run -d windows`
+
+---
+
+## 🛠 Troubleshooting Common Errors
+
+### "Undefined name 'DefaultFirebaseOptions'" or "Error when reading 'lib/firebase_options.dart'"
+- This means your Firebase configuration hasn't been generated locally yet. Just go back to **Step 3.c** (`flutterfire configure --project=afwms-d3141`) and make sure you are in the root directory of the project (`AFWMS/`).
+
+### "Building with plugins requires symlink support" (Windows)
+- You need to enable **Developer Mode** in your Windows Settings. You can type in the terminal:
+  ```bash
+  start ms-settings:developers
+  ```
+  Then turn on Developer Mode.
+
+### "1 package has newer versions incompatible with dependency constraints"
+- This is sometimes normal when there are version mismatches. If you want to update to the latest compatible versions, run:
+  ```bash
+  flutter pub upgrade
+  ```
+
+---
+Happy coding! 💻
