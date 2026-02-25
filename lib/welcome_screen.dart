@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
+import 'lgu_login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -75,9 +76,10 @@ class WelcomeScreen extends StatelessWidget {
                             label: 'LGU',
                             icon: Icons.admin_panel_settings_rounded,
                             onPressed: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('LGU login is coming soon!'),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LGULoginScreen(),
                                 ),
                               );
                             },
