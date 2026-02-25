@@ -1,37 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'registration_screen.dart';
 import 'dashboard_screen.dart';
+import '../widgets/custom_text_field.dart';
 
-class LGULoginScreen extends StatefulWidget {
-  const LGULoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LGULoginScreen> createState() => _LGULoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LGULoginScreenState extends State<LGULoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
 
   Future<void> _login() async {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-
-    if (email.isEmpty || password.isEmpty) {
+    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter both email and password')),
-      );
-      return;
-    }
-
-    // Email domain validation for LGU
-    if (!email.toLowerCase().endsWith('@lgu.com')) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Access denied. Only @lgu.com accounts are allowed.'),
-          backgroundColor: Colors.redAccent,
-        ),
       );
       return;
     }
@@ -42,8 +30,8 @@ class _LGULoginScreenState extends State<LGULoginScreen> {
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
       );
       if (mounted) {
         Navigator.pushReplacement(
@@ -55,9 +43,9 @@ class _LGULoginScreenState extends State<LGULoginScreen> {
       if (mounted) {
         String message = 'An error occurred';
         if (e.code == 'user-not-found') {
-          message = 'No LGU account found for that email.';
+          message = 'No user found for that email.';
         } else if (e.code == 'wrong-password') {
-          message = 'Incorrect password.';
+          message = 'Wrong password provided.';
         } else {
           message = e.message ?? message;
         }
@@ -76,14 +64,19 @@ class _LGULoginScreenState extends State<LGULoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // LGU branding color: Deep Teal
-    const lguPrimaryColor = Color(0xFF00695C); 
-
     return Scaffold(
-      backgroundColor: lguPrimaryColor,
+      backgroundColor: const Color(0xFF2A7AF0),
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
@@ -107,43 +100,30 @@ class _LGULoginScreenState extends State<LGULoginScreen> {
                         children: [
                           Image.asset(
                             'assets/logo.png',
-                            height: 120,
-                          ),
-                          const SizedBox(height: 16),
-                          const Text(
-                            'LGU PERSONNEL LOGIN',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: lguPrimaryColor,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.2,
-                            ),
+                            height: 150,
                           ),
                           const SizedBox(height: 8),
                           const Text(
                             'Automated Floodgate & Waterlevel Monitoring System',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 14,
                               color: Colors.black54,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           const SizedBox(height: 32),
-                          _buildTextField(
-                            label: 'LGU Email',
-                            placeholder: 'username@lgu.com',
+                          CustomTextField(
+                            label: 'Email',
+                            placeholder: 'Enter your email',
                             controller: _emailController,
-                            primaryColor: lguPrimaryColor,
                           ),
                           const SizedBox(height: 16),
-                          _buildTextField(
+                          CustomTextField(
                             label: 'Password',
                             placeholder: 'Enter your password',
                             controller: _passwordController,
                             isPassword: true,
-                            primaryColor: lguPrimaryColor,
                           ),
                           const SizedBox(height: 24),
                           SizedBox(
@@ -151,7 +131,7 @@ class _LGULoginScreenState extends State<LGULoginScreen> {
                             height: 50,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: lguPrimaryColor,
+                                backgroundColor: const Color(0xFF2A7AF0),
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -164,7 +144,7 @@ class _LGULoginScreenState extends State<LGULoginScreen> {
                                       color: Colors.white,
                                     )
                                   : const Text(
-                                      'Login as Personnel',
+                                      'Login',
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -172,15 +152,39 @@ class _LGULoginScreenState extends State<LGULoginScreen> {
                                     ),
                             ),
                           ),
-                          const SizedBox(height: 24),
-                          const Text(
-                            'LGU accounts are created by the system administrator.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black45,
-                              fontStyle: FontStyle.italic,
+                          const SizedBox(height: 16),
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'Forgot password?',
+                              style: TextStyle(
+                                color: Color(0xFF2A7AF0),
+                              ),
                             ),
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Don't have an account? "),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const RegistrationScreen(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Register now',
+                                  style: TextStyle(
+                                    color: Color(0xFF2A7AF0),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -192,63 +196,17 @@ class _LGULoginScreenState extends State<LGULoginScreen> {
             const Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
-                'Confidential - Personnel Use Only',
+                'Emergency Hotline: 911 | Barangay Hotline: (02) 8646-1753',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white70,
+                  color: Colors.white,
                   fontSize: 12,
-                  fontStyle: FontStyle.italic,
                 ),
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildTextField({
-    required String label,
-    required String placeholder,
-    required TextEditingController controller,
-    required Color primaryColor,
-    bool isPassword = false,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: primaryColor,
-            fontSize: 14,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: controller,
-          obscureText: isPassword,
-          decoration: InputDecoration(
-            hintText: placeholder,
-            hintStyle: const TextStyle(color: Colors.black26),
-            filled: true,
-            fillColor: const Color(0xFFF2F5F9),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: primaryColor, width: 2),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'lgu_login_screen.dart';
+import '../widgets/role_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -57,8 +58,7 @@ class WelcomeScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 24),
-                          _buildRoleButton(
-                            context,
+                          RoleButton(
                             label: 'Homeowner',
                             icon: Icons.home_rounded,
                             onPressed: () {
@@ -71,8 +71,7 @@ class WelcomeScreen extends StatelessWidget {
                             },
                           ),
                           const SizedBox(height: 16),
-                          _buildRoleButton(
-                            context,
+                          RoleButton(
                             label: 'LGU',
                             icon: Icons.admin_panel_settings_rounded,
                             onPressed: () {
@@ -104,37 +103,6 @@ class WelcomeScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildRoleButton(
-    BuildContext context, {
-    required String label,
-    required IconData icon,
-    required VoidCallback onPressed,
-  }) {
-    return SizedBox(
-      width: double.infinity,
-      height: 60,
-      child: ElevatedButton.icon(
-        icon: Icon(icon, size: 28),
-        label: Text(
-          label,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF2A7AF0),
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          elevation: 0,
-        ),
-        onPressed: onPressed,
       ),
     );
   }

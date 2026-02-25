@@ -57,7 +57,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 height: 50,
                 decoration: const BoxDecoration(
                   color: Color(0xFF2A7AF0), // Blue circle
-                  shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.water_drop_outlined, color: Colors.white, size: 28),
               ),
@@ -282,7 +281,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
-        color: Colors.white, // Also looks like it's inside a slightly colored container in the image, but we'll use white
+        color: Colors.white,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -305,7 +304,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 50,
                     decoration: const BoxDecoration(
                       color: Color(0xFFFF6D00), // Orange circle
-                      shape: BoxShape.circle,
                     ),
                     child: const Icon(Icons.shield_outlined, color: Colors.white, size: 28),
                   ),
@@ -325,7 +323,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: isGateOpen ? const Color(0xFFD84315) : const Color(0xFF4CAF50), // Red-orange if open, green if closed
+                          color: isGateOpen ? const Color(0xFFD84315) : const Color(0xFF4CAF50),
                         ),
                       ),
                     ],
@@ -334,7 +332,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               Switch(
                 value: isGateOpen,
-                activeColor: const Color(0xFF2A7AF0), // Light blue toggle when on
+                activeColor: const Color(0xFF2A7AF0),
                 inactiveTrackColor: Colors.grey[300],
                 onChanged: (value) {
                   setState(() {
@@ -349,7 +347,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white, // Inner white box
+              color: Colors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: Colors.grey.shade200),
             ),
@@ -363,13 +361,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     gradient: const LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Color(0xFF90CAF9), Color(0xFF42A5F5)], // Light blue to darker blue
+                      colors: [Color(0xFF90CAF9), Color(0xFF42A5F5)],
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Stack(
                     children: [
-                      // Dark grey gate columns on the sides
+                      // Dark grey gate columns
                       Positioned(
                         left: 0,
                         top: 0,
@@ -377,7 +375,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: Container(
                           width: 20,
                           decoration: const BoxDecoration(
-                            color: Color(0xFF37474F), // Dark grey
+                            color: Color(0xFF37474F),
                             borderRadius: BorderRadius.horizontal(left: Radius.circular(12)),
                           ),
                         ),
@@ -389,12 +387,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: Container(
                           width: 20,
                           decoration: const BoxDecoration(
-                            color: Color(0xFF37474F), // Dark grey
+                            color: Color(0xFF37474F),
                             borderRadius: BorderRadius.horizontal(right: Radius.circular(12)),
                           ),
                         ),
                       ),
-                      // If gate is closed, draw a gate block coming down
+                      // If gate is closed
                       if (!isGateOpen)
                         Positioned(
                           top: 0,
@@ -402,7 +400,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           right: 20,
                           bottom: 0,
                           child: Container(
-                            color: const Color(0xFF607D8B), // Grey gate
+                            color: const Color(0xFF607D8B),
                             child: const Center(
                               child: Text(
                                 'CLOSED',
@@ -450,7 +448,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           width: 8,
                           height: 8,
                           decoration: const BoxDecoration(
-                            color: Color(0xFFFF6D00), // Orange dot
+                            color: Color(0xFFFF6D00),
                             shape: BoxShape.circle,
                           ),
                         ),

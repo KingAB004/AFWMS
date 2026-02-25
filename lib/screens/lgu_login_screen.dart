@@ -1,24 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'registration_screen.dart';
 import 'dashboard_screen.dart';
+import '../widgets/custom_text_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LGULoginScreen extends StatefulWidget {
+  const LGULoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LGULoginScreen> createState() => _LGULoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LGULoginScreenState extends State<LGULoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
 
   Future<void> _login() async {
-    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter both email and password')),
+      );
+      return;
+    }
+
+    // Email domain validation for LGU
+    if (!email.toLowerCase().endsWith('@lgu.com')) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Access denied. Only @lgu.com accounts are allowed.'),
+          backgroundColor: Colors.redAccent,
+        ),
       );
       return;
     }
@@ -29,8 +43,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
+        email: email,
+        password: password,
       );
       if (mounted) {
         Navigator.pushReplacement(
@@ -42,9 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         String message = 'An error occurred';
         if (e.code == 'user-not-found') {
-          message = 'No user found for that email.';
+          message = 'No LGU account found for that email.';
         } else if (e.code == 'wrong-password') {
-          message = 'Wrong password provided.';
+          message = 'Incorrect password.';
         } else {
           message = e.message ?? message;
         }
@@ -63,11 +77,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // LGU branding color: Deep Teal
+    const lguPrimaryColor = Color(0xFF00695C); 
+
     return Scaffold(
-      backgroundColor: const Color(0xFF2A7AF0),
+      backgroundColor: lguPrimaryColor,
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
@@ -91,30 +116,43 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Image.asset(
                             'assets/logo.png',
-                            height: 150,
+                            height: 120,
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'LGU PERSONNEL LOGIN',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: lguPrimaryColor,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2,
+                            ),
                           ),
                           const SizedBox(height: 8),
                           const Text(
                             'Automated Floodgate & Waterlevel Monitoring System',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 12,
                               color: Colors.black54,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           const SizedBox(height: 32),
-                          _buildTextField(
-                            label: 'Email',
-                            placeholder: 'Enter your email',
+                          CustomTextField(
+                            label: 'LGU Email',
+                            placeholder: 'username@lgu.com',
                             controller: _emailController,
+                            primaryColor: lguPrimaryColor,
                           ),
                           const SizedBox(height: 16),
-                          _buildTextField(
+                          CustomTextField(
                             label: 'Password',
                             placeholder: 'Enter your password',
                             controller: _passwordController,
                             isPassword: true,
+                            primaryColor: lguPrimaryColor,
                           ),
                           const SizedBox(height: 24),
                           SizedBox(
@@ -122,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 50,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF2A7AF0),
+                                backgroundColor: lguPrimaryColor,
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -135,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       color: Colors.white,
                                     )
                                   : const Text(
-                                      'Login',
+                                      'Login as Personnel',
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -143,39 +181,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                             ),
                           ),
-                          const SizedBox(height: 16),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'Forgot password?',
-                              style: TextStyle(
-                                color: Color(0xFF2A7AF0),
-                              ),
+                          const SizedBox(height: 24),
+                          const Text(
+                            'LGU accounts are created by the system administrator.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black45,
+                              fontStyle: FontStyle.italic,
                             ),
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Don't have an account? "),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const RegistrationScreen(),
-                                    ),
-                                  );
-                                },
-                                child: const Text(
-                                  'Register now',
-                                  style: TextStyle(
-                                    color: Color(0xFF2A7AF0),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
                           ),
                         ],
                       ),
@@ -187,57 +201,18 @@ class _LoginScreenState extends State<LoginScreen> {
             const Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
-                'Emergency Hotline: 911 | Barangay Hotline: (02) 8646-1753',
+                'Confidential - Personnel Use Only',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.white70,
                   fontSize: 12,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildTextField({
-    required String label,
-    required String placeholder,
-    required TextEditingController controller,
-    bool isPassword = false,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-            fontSize: 14,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: controller,
-          obscureText: isPassword,
-          decoration: InputDecoration(
-            hintText: placeholder,
-            hintStyle: const TextStyle(color: Colors.black26),
-            filled: true,
-            fillColor: const Color(0xFFF2F5F9),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

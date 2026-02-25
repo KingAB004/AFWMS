@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../widgets/custom_text_field.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -77,7 +78,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       backgroundColor: const Color(0xFF2A7AF0),
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
@@ -114,20 +123,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
                           const SizedBox(height: 24),
-                          _buildTextField(
+                          CustomTextField(
                             label: 'Email',
                             placeholder: 'Enter your email',
                             controller: _emailController,
                           ),
                           const SizedBox(height: 16),
-                          _buildTextField(
+                          CustomTextField(
                             label: 'Password',
                             placeholder: 'Enter your password',
                             controller: _passwordController,
                             isPassword: true,
                           ),
                           const SizedBox(height: 16),
-                          _buildTextField(
+                          CustomTextField(
                             label: 'Confirm Password',
                             placeholder: 'Re-enter your password',
                             controller: _confirmPasswordController,
@@ -198,46 +207,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildTextField({
-    required String label,
-    required String placeholder,
-    required TextEditingController controller,
-    bool isPassword = false,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-            fontSize: 14,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: controller,
-          obscureText: isPassword,
-          decoration: InputDecoration(
-            hintText: placeholder,
-            hintStyle: const TextStyle(color: Colors.black26),
-            filled: true,
-            fillColor: const Color(0xFFF2F5F9),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
