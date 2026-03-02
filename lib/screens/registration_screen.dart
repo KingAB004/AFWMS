@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/custom_text_field.dart';
 import '../services/auth_service.dart';
-import 'dashboard_screen.dart';
+import 'main_home_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -27,7 +27,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         _showSnackBar('Account created successfully!');
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+          MaterialPageRoute(builder: (context) => const MainHomeScreen()),
         );
       }
     } catch (e) {

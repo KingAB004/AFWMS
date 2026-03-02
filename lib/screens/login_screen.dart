@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'registration_screen.dart';
-import 'dashboard_screen.dart';
+import 'main_home_screen.dart';
 import '../widgets/custom_text_field.dart';
 import '../services/auth_service.dart';
 import '../widgets/google_logo_base64.dart';
@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (credential != null && mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+          MaterialPageRoute(builder: (context) => const MainHomeScreen()),
         );
       }
     } catch (e) {
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const DashboardScreen()),
+          MaterialPageRoute(builder: (context) => const MainHomeScreen()),
         );
       }
     } on FirebaseAuthException catch (e) {
