@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -480,7 +481,9 @@
             margin-bottom: 8px;
         }
 
-        .form-input, .form-textarea, .form-select {
+        .form-input,
+        .form-textarea,
+        .form-select {
             width: 100%;
             padding: 12px 16px;
             border: 2px solid #e5e7eb;
@@ -491,7 +494,9 @@
             background: white;
         }
 
-        .form-input:focus, .form-textarea:focus, .form-select:focus {
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
             outline: none;
             border-color: #6366f1;
         }
@@ -584,6 +589,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -628,6 +634,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
@@ -637,7 +644,7 @@
                 <span>Aqua Gate</span>
             </div>
         </div>
-        
+
         <div class="sidebar-nav">
             <div class="nav-item active" onclick="showPage('overview')">
                 <span class="nav-icon">📊</span>
@@ -721,19 +728,22 @@
                         <div class="stat-card">
                             <div class="stat-content">
                                 <div class="stat-label">Min Level Today</div>
-                                <div class="stat-value" style="font-size: 24px;"><span id="overviewMinLevel">2.1</span>m</div>
+                                <div class="stat-value" style="font-size: 24px;"><span id="overviewMinLevel">2.1</span>m
+                                </div>
                             </div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-content">
                                 <div class="stat-label">Max Level Today</div>
-                                <div class="stat-value" style="font-size: 24px;"><span id="overviewMaxLevel">6.2</span>m</div>
+                                <div class="stat-value" style="font-size: 24px;"><span id="overviewMaxLevel">6.2</span>m
+                                </div>
                             </div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-content">
                                 <div class="stat-label">Gate Operations</div>
-                                <div class="stat-value" style="font-size: 24px;"><span id="overviewOperations">3</span></div>
+                                <div class="stat-value" style="font-size: 24px;"><span id="overviewOperations">3</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -822,7 +832,8 @@
                         <button class="btn btn-danger" id="closeGateBtn" onclick="closeGate()">
                             🔒 Close Flood Gate
                         </button>
-                        <button class="btn btn-success" id="openGateBtn" onclick="openGate()" style="display: none; margin-top: 12px;">
+                        <button class="btn btn-success" id="openGateBtn" onclick="openGate()"
+                            style="display: none; margin-top: 12px;">
                             🔓 Open Flood Gate
                         </button>
 
@@ -838,7 +849,9 @@
                         </div>
 
                         <div class="gate-info-box">
-                            <strong>⚠️ Important:</strong> Gate operation affects downstream water flow. Please monitor water levels carefully before and after gate operations. Ensure proper authorization before making changes.
+                            <strong>⚠️ Important:</strong> Gate operation affects downstream water flow. Please monitor
+                            water levels carefully before and after gate operations. Ensure proper authorization before
+                            making changes.
                         </div>
                     </div>
                 </div>
@@ -874,7 +887,8 @@
 
                         <div class="form-group">
                             <label class="form-label">Message</label>
-                            <textarea class="form-textarea" id="announcementMessage" placeholder="Enter your announcement message here..."></textarea>
+                            <textarea class="form-textarea" id="announcementMessage"
+                                placeholder="Enter your announcement message here..."></textarea>
                         </div>
 
                         <button class="btn btn-primary" onclick="sendAnnouncement()">
@@ -914,6 +928,55 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+        import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: 'AIzaSyCYzsTkqeRD8ayh3xU54LXVC9xjZVd963Y',
+            appId: '1:223103795490:web:d54b3ccd76fc336373e57b',
+            messagingSenderId: '223103795490',
+            projectId: 'afwms-d3141',
+            authDomain: 'afwms-d3141.firebaseapp.com',
+            storageBucket: 'afwms-d3141.firebasestorage.app',
+            measurementId: 'G-6GW2WQFR4X',
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Sign in anonymously for LGU access
+        signInAnonymously(auth).catch((error) => {
+            console.error('Auth error:', error);
+        });
+
+        // Make Firebase available globally
+        window.db = db;
+        window.addDoc = addDoc;
+        window.collection = collection;
+        window.serverTimestamp = serverTimestamp;
+        window.query = query;
+        window.orderBy = orderBy;
+        window.limit = limit;
+        window.getDocs = getDocs;
+
+        // Load announcements from Firebase on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadAnnouncementsFromFirebase();
+
+            // Request push notification permissions
+            if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+                Notification.requestPermission();
+            }
+        });
+    </script>
+
     <script>
         // Page Navigation
         function showPage(pageId) {
@@ -921,15 +984,15 @@
             document.querySelectorAll('.page-view').forEach(page => {
                 page.classList.remove('active');
             });
-            
+
             // Remove active class from all nav items
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
-            
+
             // Show selected page
             document.getElementById(pageId).classList.add('active');
-            
+
             // Add active class to clicked nav item
             event.target.closest('.nav-item').classList.add('active');
         }
@@ -938,7 +1001,7 @@
         function updateWaterLevel() {
             const level = (Math.random() * 3 + 3.5).toFixed(1); // Random between 3.5 and 6.5
             const percentage = (level / 10) * 100;
-            
+
             // Update all water level displays
             document.getElementById('waterLevelValue').textContent = level + 'm';
             document.getElementById('overviewWaterLevel').textContent = level;
@@ -965,18 +1028,18 @@
             if (confirm('Are you sure you want to close the flood gate?')) {
                 gateOpen = false;
                 operationCount++;
-                
+
                 // Update all gate status displays
                 document.getElementById('gateStatus').textContent = 'CLOSED';
                 document.getElementById('gateStatus').className = 'gate-status-badge gate-closed';
                 document.getElementById('overviewGateStatus').textContent = 'CLOSED';
-                
+
                 document.getElementById('closeGateBtn').style.display = 'none';
                 document.getElementById('openGateBtn').style.display = 'block';
-                
+
                 document.getElementById('operationCount').textContent = operationCount;
                 document.getElementById('overviewOperations').textContent = operationCount;
-                
+
                 // Send automatic announcement
                 addAnnouncement('warning', 'Flood gate has been CLOSED by LGU operator.');
             }
@@ -986,25 +1049,25 @@
             if (confirm('Are you sure you want to open the flood gate?')) {
                 gateOpen = true;
                 operationCount++;
-                
+
                 // Update all gate status displays
                 document.getElementById('gateStatus').textContent = 'OPEN';
                 document.getElementById('gateStatus').className = 'gate-status-badge gate-open';
                 document.getElementById('overviewGateStatus').textContent = 'OPEN';
-                
+
                 document.getElementById('closeGateBtn').style.display = 'block';
                 document.getElementById('openGateBtn').style.display = 'none';
-                
+
                 document.getElementById('operationCount').textContent = operationCount;
                 document.getElementById('overviewOperations').textContent = operationCount;
-                
+
                 // Send automatic announcement
                 addAnnouncement('info', 'Flood gate has been OPENED by LGU operator.');
             }
         }
 
         // Announcement system
-        function sendAnnouncement() {
+        async function sendAnnouncement() {
             const type = document.getElementById('announcementType').value;
             const message = document.getElementById('announcementMessage').value.trim();
 
@@ -1013,32 +1076,179 @@
                 return;
             }
 
-            addAnnouncement(type, message);
-            document.getElementById('announcementMessage').value = '';
-            alert('Announcement sent successfully!');
+            // Show loading state
+            const sendBtn = event.target;
+            const originalText = sendBtn.innerHTML;
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '⏳ Sending...';
+
+            try {
+                await addAnnouncement(type, message);
+                document.getElementById('announcementMessage').value = '';
+
+                // Show native push notification if permitted, otherwise fallback to alert
+                if ('Notification' in window && Notification.permission === 'granted') {
+                    new Notification('Announcement Sent Successfully', {
+                        body: type === 'danger' ? 'Emergency alert has been broadcasted to all users.' : 'Your announcement was broadcasted successfully.',
+                        icon: '📢'
+                    });
+                } else {
+                    alert('Announcement sent successfully! Users will receive a notification.');
+                }
+            } catch (error) {
+                console.error('Error sending announcement:', error);
+                alert('Failed to send announcement. Please try again.');
+            } finally {
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = originalText;
+            }
         }
 
-        function addAnnouncement(type, message) {
-            const listElement = document.getElementById('announcementList');
-            const typeClass = 'type-' + type;
-            const typeLabel = type.toUpperCase();
-            
-            announcementCountValue++;
-            document.getElementById('announcementCount').textContent = announcementCountValue;
-            
-            const announcementHTML = `
-                <div class="announcement-item">
-                    <div class="announcement-header">
-                        <span class="announcement-type ${typeClass}">${typeLabel}</span>
-                        <span class="announcement-time">Just now</span>
-                    </div>
-                    <div class="announcement-message">
-                        ${message}
-                    </div>
-                </div>
-            `;
+        async function addAnnouncement(type, message) {
+            try {
+                // Save announcement to Firestore
+                const announcementData = {
+                    type: type,
+                    message: message,
+                    timestamp: serverTimestamp(),
+                    createdAt: new Date().toISOString(),
+                    sender: 'LGU',
+                    priority: type === 'danger' ? 'high' : 'normal',
+                    sent: true
+                };
 
-            listElement.insertAdjacentHTML('afterbegin', announcementHTML);
+                const docRef = await addDoc(collection(db, 'announcements'), announcementData);
+                console.log('Announcement saved with ID:', docRef.id);
+
+                // Send push notification to all users via Cloud Function or FCM topic
+                await sendPushNotification(type, message);
+
+                // Update UI immediately
+                const listElement = document.getElementById('announcementList');
+                const typeClass = 'type-' + type;
+                const typeLabel = type.toUpperCase();
+
+                announcementCountValue++;
+                document.getElementById('announcementCount').textContent = announcementCountValue;
+
+                const announcementHTML = `
+                    <div class="announcement-item">
+                        <div class="announcement-header">
+                            <span class="announcement-type ${typeClass}">${typeLabel}</span>
+                            <span class="announcement-time">Just now</span>
+                        </div>
+                        <div class="announcement-message">
+                            ${message}
+                        </div>
+                    </div>
+                `;
+
+                listElement.insertAdjacentHTML('afterbegin', announcementHTML);
+
+            } catch (error) {
+                console.error('Error adding announcement:', error);
+                throw error;
+            }
+        }
+
+        // Send push notification via FCM
+        async function sendPushNotification(type, message) {
+            try {
+                // Get notification title based on type
+                let title = 'AFWMS Announcement';
+                if (type === 'danger') {
+                    title = '🚨 EMERGENCY ALERT';
+                } else if (type === 'warning') {
+                    title = '⚠️ Warning Alert';
+                } else {
+                    title = 'ℹ️ Information';
+                }
+
+                // Send notification via FCM Cloud Messaging API
+                // Note: This requires a backend API or Cloud Function
+                // For now, we'll save the notification request to Firestore
+                // and let a Cloud Function handle the actual push notification
+                const notificationData = {
+                    title: title,
+                    body: message,
+                    type: type,
+                    topic: 'all_users', // Send to all users subscribed to this topic
+                    priority: type === 'danger' ? 'high' : 'normal',
+                    timestamp: serverTimestamp(),
+                    createdAt: new Date().toISOString(),
+                    status: 'pending'
+                };
+
+                await addDoc(collection(db, 'notifications'), notificationData);
+                console.log('Push notification queued for all users');
+
+            } catch (error) {
+                console.error('Error sending push notification:', error);
+            }
+        }
+
+        // Load announcements from Firebase
+        async function loadAnnouncementsFromFirebase() {
+            try {
+                const q = query(
+                    collection(db, 'announcements'),
+                    orderBy('timestamp', 'desc'),
+                    limit(10)
+                );
+
+                const querySnapshot = await getDocs(q);
+                const listElement = document.getElementById('announcementList');
+
+                // Clear existing (sample) announcements
+                listElement.innerHTML = '';
+
+                let count = 0;
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const typeClass = 'type-' + data.type;
+                    const typeLabel = data.type.toUpperCase();
+
+                    // Calculate time ago
+                    let timeAgo = 'Just now';
+                    if (data.createdAt) {
+                        const announcementTime = new Date(data.createdAt);
+                        const now = new Date();
+                        const diffMinutes = Math.floor((now - announcementTime) / 60000);
+
+                        if (diffMinutes < 1) {
+                            timeAgo = 'Just now';
+                        } else if (diffMinutes < 60) {
+                            timeAgo = `${diffMinutes} minute${diffMinutes > 1 ? 's' : ''} ago`;
+                        } else {
+                            const diffHours = Math.floor(diffMinutes / 60);
+                            timeAgo = `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+                        }
+                    }
+
+                    const announcementHTML = `
+                        <div class="announcement-item">
+                            <div class="announcement-header">
+                                <span class="announcement-type ${typeClass}">${typeLabel}</span>
+                                <span class="announcement-time">${timeAgo}</span>
+                            </div>
+                            <div class="announcement-message">
+                                ${data.message}
+                            </div>
+                        </div>
+                    `;
+
+                    listElement.insertAdjacentHTML('beforeend', announcementHTML);
+                    count++;
+                });
+
+                announcementCountValue = count;
+                document.getElementById('announcementCount').textContent = count;
+
+                console.log(`Loaded ${count} announcements from Firebase`);
+            } catch (error) {
+                console.error('Error loading announcements:', error);
+                // Keep sample announcements if Firebase fails
+            }
         }
 
         // Simulate gate operation time
@@ -1051,4 +1261,5 @@
         }, 60000); // Update every minute
     </script>
 </body>
+
 </html>
