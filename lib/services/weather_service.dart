@@ -37,12 +37,16 @@ class WeatherService {
       }
       
       final url = '$_baseUrl/weather?q=$cityName&appid=$apiKey&units=metric';
+      print('🌐 Making API call to: $url');
       final response = await http.get(Uri.parse(url));
-
+      print('📡 Response status: ${response.statusCode}');
+      
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        print('✅ Weather data received successfully');
         return WeatherData.fromJson(data);
       } else {
+        print('❌ API Error Response: ${response.body}');
         throw Exception('Failed to load current weather: ${response.statusCode}');
       }
     } catch (e) {
