@@ -102,6 +102,9 @@ To run the app:
 **"Undefined name 'DefaultFirebaseOptions'" or "Error when reading 'lib/firebase_options.dart'"**
 - This means your Firebase configuration hasn't been generated locally yet. Just go back to **Step 3.c** (`flutterfire configure --project=afwms-d3141`) and make sure you are in the root directory of the project (`AFWMS/`).
 
+**Firebase Realtime Database not saving or reading data**
+- Sometimes `flutterfire configure` forgets to add the Realtime Database URL. Open your generated `lib/firebase_options.dart` and make sure `databaseURL: 'https://afwms-d3141-default-rtdb.firebaseio.com'` is added to your Web, Android, and Windows configurations.
+
 ### Weather API Errors
 **"Invalid API key" error in Weather screen**
 - Check if you copied your API key correctly in the `.env` file
