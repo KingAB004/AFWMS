@@ -1,19 +1,36 @@
-// ===== User Management =====
-let users = [
-    { id: 1, username: 'john_admin', email: 'john@afwms.com', role: 'Admin', status: 'Active', joined: '2025-01-15' },
-    { id: 2, username: 'maria_lgu', email: 'maria@lgu.gov.ph', role: 'LGU', status: 'Active', joined: '2025-02-01' },
-    { id: 3, username: 'home_user1', email: 'homeowner1@email.com', role: 'Homeowner', status: 'Active', joined: '2025-02-15' },
-    { id: 4, username: 'home_user2', email: 'homeowner2@email.com', role: 'Homeowner', status: 'Inactive', joined: '2025-01-20' },
-    { id: 5, username: 'lgu_officer', email: 'officer@lgu.gov.ph', role: 'LGU', status: 'Active', joined: '2025-02-10' },
-];
+// ===== User Management (Firebase Integrated Compat) =====
 
-let nextUserId = 6;
-let filteredUsers = [...users];
+let users = [];
+let filteredUsers = [];
+window.users = users;
 
 // Init Users Management
-function initUsersManagement() {
-    renderUsersTable();
+window.initUsersManagement = async function() {
     attachUserEventListeners();
+    await fetchUsers();
+};
+
+async function fetchUsers() {
+    const db = window.db;
+    try {
+        const usersRef = db.ref('users');
+        const snapshot = await usersRef.once('value');
+        users = [];
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            for (let uid in data) {
+                users.push({ id: uid, ...data[uid] });
+            }
+        }
+        window.users = users;
+        filteredUsers = [...users];
+        renderUsersTable();
+        if (typeof window.updateStats === 'function') {
+            window.updateStats();
+        }
+    } catch (e) {
+        console.error("Error fetching users: ", e);
+    }
 }
 
 // Attach event listeners
@@ -39,6 +56,8 @@ function attachUserEventListeners() {
 function openAddUserModal() {
     document.getElementById('user-id').value = '';
     document.getElementById('user-form').reset();
+    document.getElementById('password').closest('.form-group').style.display = 'block';
+    document.getElementById('password').required = true;
     document.getElementById('modal-title').textContent = 'Add New User';
     document.getElementById('user-modal').classList.add('active');
 }
@@ -49,7 +68,7 @@ function closeUserModal() {
 }
 
 // Handle User Form Submit
-function handleUserFormSubmit(e) {
+async function handleUserFormSubmit(e) {
     e.preventDefault();
 
     const userId = document.getElementById('user-id').value;
@@ -59,30 +78,54 @@ function handleUserFormSubmit(e) {
     const password = document.getElementById('password').value;
     const status = document.getElementById('status').value;
 
+    const db = window.db;
+
     if (userId) {
         // Update existing user
-        const user = users.find(u => u.id == userId);
-        if (user) {
-            user.username = username;
-            user.email = email;
-            user.role = role;
-            user.status = status;
+        try {
+            const userRef = db.ref('users/' + userId);
+            await userRef.update({
+                username,
+                email,
+                role,
+                status
+            });
+            alert('User updated successfully!');
+        } catch (error) {
+            console.error("Error updating user: ", error);
+            alert('Error updating user: ' + error.message);
         }
     } else {
         // Add new user
-        users.push({
-            id: nextUserId++,
-            username,
-            email,
-            role,
-            status,
-            joined: new Date().toISOString().split('T')[0]
-        });
+        const secondaryAuth = window.secondaryAuth;
+        try {
+            // Create user in secondary auth (doesn't log current user out)
+            const userCredential = await secondaryAuth.createUserWithEmailAndPassword(email, password);
+            const newUid = userCredential.user.uid;
+
+            // Add user details to Realtime Database
+            const userRef = db.ref('users/' + newUid);
+            await userRef.set({
+                username,
+                email,
+                role,
+                status,
+                joined: new Date().toISOString().split('T')[0]
+            });
+            
+            // Sign out the secondary app instance
+            await secondaryAuth.signOut();
+
+            alert('User created successfully!');
+        } catch (error) {
+            console.error("Error creating user: ", error);
+            alert('Error creating user: ' + error.message);
+            return;
+        }
     }
 
-    renderUsersTable();
+    await fetchUsers(); // Re-fetch the user list
     closeUserModal();
-    updateStats();
 }
 
 // Filter Users
@@ -111,17 +154,19 @@ function renderUsersTable() {
     filteredUsers.forEach(user => {
         const statusBadge = user.status === 'Active' ? 'badge-success' : 'badge-danger';
         const row = document.createElement('tr');
+        // Truncate long IDs to show in the table
+        const shortId = user.id.substring(0, 8) + '...';
         row.innerHTML = `
-            <td>#${user.id}</td>
+            <td title="${user.id}">${shortId}</td>
             <td><strong>${user.username}</strong></td>
             <td>${user.email}</td>
             <td><span class="badge">${user.role}</span></td>
             <td><span class="badge ${statusBadge}">${user.status}</span></td>
-            <td>${user.joined}</td>
+            <td>${user.joined || 'N/A'}</td>
             <td>
                 <div class="action-buttons">
-                    <button class="btn-edit" onclick="editUser(${user.id})">Edit</button>
-                    <button class="btn-delete" onclick="deleteUser(${user.id})">Delete</button>
+                    <button class="btn-edit" onclick="window.editUser('${user.id}')">Edit</button>
+                    <button class="btn-delete" onclick="window.deleteUser('${user.id}')">Delete</button>
                 </div>
             </td>
         `;
@@ -130,7 +175,7 @@ function renderUsersTable() {
 }
 
 // Edit User
-function editUser(id) {
+window.editUser = function(id) {
     const user = users.find(u => u.id === id);
     if (!user) return;
 
@@ -139,24 +184,37 @@ function editUser(id) {
     document.getElementById('email').value = user.email;
     document.getElementById('role').value = user.role;
     document.getElementById('status').value = user.status;
-    document.getElementById('password').value = '••••••••';
+    
+    // Hide password field when editing as we don't handle auth update here
+    const pwdInput = document.getElementById('password');
+    pwdInput.value = '';
+    pwdInput.required = false;
+    pwdInput.closest('.form-group').style.display = 'none';
+
     document.getElementById('modal-title').textContent = 'Edit User';
     document.getElementById('user-modal').classList.add('active');
-}
+};
 
 // Delete User
-function deleteUser(id) {
-    if (confirm('Are you sure you want to delete this user?')) {
-        users = users.filter(u => u.id !== id);
-        renderUsersTable();
-        updateStats();
+window.deleteUser = async function(id) {
+    if (confirm('Are you sure you want to delete this user from the dashboard list? Note: This deletes the Realtime Database profile, but cannot delete the Firebase Auth account directly from the client.')) {
+        const db = window.db;
+        try {
+            const userRef = db.ref('users/' + id);
+            await userRef.remove();
+            await fetchUsers(); // Refresh list
+        } catch(error) {
+            console.error("Error deleting user: ", error);
+            alert("Error deleting user: " + error.message);
+        }
     }
-}
+};
 
 // Update user stats
 function updateStats() {
-    document.getElementById('total-users').textContent = users.length;
+    const totalUsersElem = document.getElementById('total-users');
+    if (totalUsersElem) {
+        totalUsersElem.textContent = users.length;
+    }
 }
-
-// Export function for access from other files
-window.users = users;
+window.updateStats = updateStats;
