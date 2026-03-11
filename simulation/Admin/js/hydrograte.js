@@ -1,4 +1,4 @@
-﻿// ===== Hydrograte Status & Model =====
+// ===== Hydrograte Status & Model =====
 let hydrogrates = [
     {
         id: 1,
@@ -12,7 +12,7 @@ let hydrogrates = [
         serial: 'HGP-2024-001',
         sensors: 3,
         waterLevel: 0.65,
-        maxWaterLevel: 1.5,
+        maxWaterLevel: 50,
         lastCalibration: '2026-03-01',
         nextCalibration: '2026-04-01',
         installationDate: '2024-01-15',
@@ -58,7 +58,7 @@ function initHydrograteStatus() {
                 if (hydrogrates && hydrogrates.length > 0) {
                     const mainStation = hydrogrates[0];
                     if (data.water_height_cm !== undefined) {
-                        mainStation.waterLevel = data.water_height_cm / 100;
+                        mainStation.waterLevel = data.water_height_cm;
                     }
                     if (data.last_updated) {
                         mainStation.lastPing = data.last_updated;
@@ -72,6 +72,13 @@ function initHydrograteStatus() {
                     renderHydrogratesList();
                     if (selectedHydrograteId === mainStation.id) {
                         hydrograteData = mainStation;
+                        
+                        // ADD FLOODGATE STATUS UPDATE HERE
+                        const floodgateStatusEl = document.getElementById('remote-floodgate-status');
+                        if (floodgateStatusEl && data.floodgate_status) {
+                            floodgateStatusEl.textContent = data.floodgate_status.toUpperCase();
+                        }
+                        
                         renderHydrograteStatus();
                     }
                     if (typeof window.updateStats === 'function') {
@@ -96,6 +103,23 @@ function attachHydrograteEventListeners() {
     const hydrograteForm = document.getElementById('hydrograte-form');
     const closeHydrograteModalBtn = document.getElementById('close-hydrograte-modal');
     const closeHydrograteFormBtn = document.getElementById('close-hydrograte-form-btn');
+
+    // Toggle Floodgate Button
+    const toggleFloodgateBtn = document.getElementById('toggle-floodgate-btn');
+    if (toggleFloodgateBtn) {
+        toggleFloodgateBtn.addEventListener('click', function() {
+            if (window.db) {
+                const floodRef = window.db.ref('flood_monitoring');
+                floodRef.once('value').then(function(snapshot) {
+                    if (snapshot.exists()) {
+                        const currentStatus = snapshot.val().floodgate_status;
+                        const newStatus = currentStatus === 'open' ? 'closed' : 'open';
+                        floodRef.update({ floodgate_status: newStatus });
+                    }
+                });
+            }
+        });
+    }
 
     if (refreshBtn) refreshBtn.addEventListener('click', refreshHydrograteData);
     if (calibrateBtn) calibrateBtn.addEventListener('click', calibrateDevice);
