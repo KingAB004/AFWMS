@@ -1,4 +1,4 @@
-// ===== Hydrograte Status & Model =====
+﻿// ===== Hydrograte Status & Model =====
 let hydrogrates = [
     {
         id: 1,
@@ -50,6 +50,38 @@ let hydrograteData = hydrogrates[0];
 
 // Init Hydrograte Status
 function initHydrograteStatus() {
+    if (window.db) {
+        const floodRef = window.db.ref('flood_monitoring');
+        floodRef.on('value', function(snapshot) {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                if (hydrogrates && hydrogrates.length > 0) {
+                    const mainStation = hydrogrates[0];
+                    if (data.water_height_cm !== undefined) {
+                        mainStation.waterLevel = data.water_height_cm / 100;
+                    }
+                    if (data.last_updated) {
+                        mainStation.lastPing = data.last_updated;
+                    }
+                    let activeSensors = 0;
+                    if (data.sensor_safe) activeSensors++;
+                    if (data.sensor_warning) activeSensors++;
+                    if (data.sensor_danger) activeSensors++;
+                    mainStation.sensors = activeSensors || 3;
+                    
+                    renderHydrogratesList();
+                    if (selectedHydrograteId === mainStation.id) {
+                        hydrograteData = mainStation;
+                        renderHydrograteStatus();
+                    }
+                    if (typeof window.updateStats === 'function') {
+                        window.updateStats();
+                    }
+                }
+            }
+        });
+    }
+
     renderHydrogratesList();
     renderHydrograteStatus();
     attachHydrograteEventListeners();
@@ -185,7 +217,7 @@ function renderHydrograteStatus() {
     const nextCalEl = document.getElementById('next-calibration');
     if (nextCalEl) nextCalEl.textContent = hydrograteData.nextCalibration;
 
-    // Overview stat card (null-safe � only present when overview tab is active)
+    // Overview stat card (null-safe — only present when overview tab is active)
     const statusHydroEl = document.getElementById('status-hydrograte');
     if (statusHydroEl) statusHydroEl.textContent = hydrograteData.status;
 
@@ -388,3 +420,4 @@ function restartDevice() {
         }, 2000);
     }
 }
+

@@ -12,6 +12,12 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   bool isGateOpen = true;
+  double waterHeightCm = 1500; // Default 15m
+  String waterLevelStatus = 'Normal';
+  String lastUpdated = '';
+  
+  // Realtime Database reference
+  final DatabaseReference _floodRef = FirebaseDatabase.instance.ref('flood_monitoring');
 
   
   static const Color deepSpaceBlue = Color(0xFF003249);
@@ -52,6 +58,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
         print("Error fetching user data: $e");
       }
     }
+    
+    // Listen to flood monitoring data
+    _floodRef.onValue.listen((event) {
+      if (event.snapshot.exists && mounted) {
+        final data = event.snapshot.value as Map<dynamic, dynamic>;
+        setState(() {
+          isGateOpen = data['floodgate_status'] != 'closed';
+          waterHeightCm = (data['water_height_cm'] ?? 0).toDouble();
+          waterLevelStatus = data['water_level']?.toString() ?? 'Normal';
+          lastUpdated = data['last_updated']?.toString() ?? '';
+        });
+      }
+    });
   }
 
   void _showNotificationsDropdown() {
@@ -144,9 +163,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           const SizedBox(height: 4),
-          const Text(
-            '16m',
-            style: TextStyle(
+          Text(
+            '${(waterHeightCm / 100).toStringAsFixed(2)}m',
+            style: const TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.w600,
               color: deepSpaceBlue,
@@ -179,16 +198,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
             decoration: BoxDecoration(
-              color: const Color(0xFFFFF9C4),
+              color: waterLevelStatus.toLowerCase() == 'normal' 
+                  ? const Color(0xFFE8F5E9) 
+                  : const Color(0xFFFFF9C4),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Row(
               children: [
-                const Icon(Icons.warning_amber_rounded, color: Color(0xFFF57C00), size: 20),
+                Icon(
+                  waterLevelStatus.toLowerCase() == 'normal' 
+                      ? Icons.check_circle_outline 
+                      : Icons.warning_amber_rounded,
+                  color: waterLevelStatus.toLowerCase() == 'normal' 
+                      ? Colors.green 
+                      : const Color(0xFFF57C00),
+                  size: 20,
+                ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    'Second alarm threshold reached',
+                    waterLevelStatus.toLowerCase() == 'normal'
+                        ? 'Water level is within normal limits'
+                        : 'Current status: $waterLevelStatus',
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
@@ -250,7 +281,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             bottom: 0,
             left: 0,
             right: 0,
-            height: 120, // Adjust based on current level (16m = 2nd alarm)
+            height: (waterHeightCm / 100) * 10, // Assuming 200px max height for ~20m
             child: Container(
               decoration: BoxDecoration(
                 color: cerulean,
@@ -358,11 +389,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(context).pop();
-                            setState(() {
-                              isGateOpen = false;
-                            });
+                            await _floodRef.update({'floodgate_status': 'closed'});
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFEF5350),
@@ -425,11 +454,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                         ),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(context).pop();
-                            setState(() {
-                              isGateOpen = true;
-                            });
+                            await _floodRef.update({'floodgate_status': 'open'});
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: cerulean,
