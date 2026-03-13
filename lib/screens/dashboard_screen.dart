@@ -23,6 +23,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final DatabaseReference _floodRef = FirebaseDatabase.instance.ref('flood_monitoring');
 >>>>>>> Stashed changes
 
+<<<<<<< Updated upstream
+=======
+
+  // Modern Minimal Color Palette
+  static const Color bgColor = Color(0xFFF8F9FA); // Minimal light gray background
+  static const Color cardColor = Colors.white;
+  static const Color primaryBlue = Color(0xFF2563EB); // Modern vibrant blue
+  static const Color textMain = Color(0xFF0F172A); // Slate 900
+  static const Color textMuted = Color(0xFF64748B); // Slate 500
+  static const Color accentLightBlue = Color(0xFFDBEAFE); // Blue 100
+ 
+  // Status Colors
+  static const Color statusCritical = Color(0xFFEF4444); // Red 500
+  static const Color statusWarning = Color(0xFFF59E0B); // Amber 500
+  static const Color statusNormal = Color(0xFF10B981); // Emerald 500
+
+>>>>>>> Stashed changes
 
   // Modern Minimal Color Palette
   static const Color bgColor = Color(0xFFF8F9FA); // Minimal light gray background
@@ -90,6 +107,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   void _showNotificationsDropdown() {
     showDialog(
@@ -119,6 +139,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       drawer: _buildDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -320,6 +341,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
 >>>>>>> Stashed changes
+=======
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+>>>>>>> Stashed changes
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -391,6 +416,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   Widget _buildFloodgateControl() {
     final Color ringColor = isGateOpen ? cerulean : const Color(0xFFEF5350);
@@ -571,6 +597,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
 =======
+=======
+>>>>>>> Stashed changes
 
   Widget _buildGreeting() {
     return Column(
@@ -583,6 +611,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             fontWeight: FontWeight.w700,
             color: textMain,
             letterSpacing: -0.5,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
           ),
         ),
@@ -1033,6 +1064,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ),
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 const SizedBox(height: 16),
                 const Text(
                   'Isaac Day',
@@ -1041,6 +1073,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
 =======
+=======
+>>>>>>> Stashed changes
                 const SizedBox(height: 20),
                 Text(
                   _username,
@@ -1048,6 +1082,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: textMain,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                   ),
                 ),
