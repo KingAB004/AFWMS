@@ -115,6 +115,7 @@ To run the app:
 
 **Firebase Realtime Database not saving or reading data**
 - Sometimes `flutterfire configure` forgets to add the Realtime Database URL. Open your generated `lib/firebase_options.dart` and make sure `databaseURL: 'https://afwms-d3141-default-rtdb.firebaseio.com'` is added to your Web, Android, and Windows configurations.
+- The repo is locked to the Firebase project `afwms-d3141`. Do not mix it with a different project in Firebase Console when checking Firestore or Realtime Database data.
 
 ### Weather API Errors
 **"Invalid API key" error in Weather screen**

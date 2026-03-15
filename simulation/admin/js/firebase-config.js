@@ -7,7 +7,7 @@ const firebaseConfig = {
   messagingSenderId: "223103795490",
   appId: "1:223103795490:web:d54b3ccd76fc336373e57b",
   measurementId: "G-6GW2WQFR4X",
-  databaseURL: "https://afwms-d3141-default-rtdb.firebaseio.com/" // Added Realtime DB URL
+  databaseURL: "https://afwms-d3141-default-rtdb.firebaseio.com" // RTDB URL matched to Firebase SDK region warning
 };
 
 // Initialize primary Firebase

@@ -1,6 +1,7 @@
 // ===== Announcements & Messages (Firebase Integrated) =====
 
 let announcements = [];
+let hasShownAnnouncementPermissionWarning = false;
 
 // Initialize Announcements
 window.initAnnouncements = async function() {
@@ -35,6 +36,16 @@ async function fetchAnnouncements() {
         }
     } catch (e) {
         console.error("Error fetching announcements:", e);
+        handleAnnouncementPermissionError(e);
+    }
+}
+
+function handleAnnouncementPermissionError(error) {
+    if (!error || !error.code) return;
+    const isPermissionError = error.code === 'permission-denied' || error.code === 'PERMISSION_DENIED';
+    if (isPermissionError && !hasShownAnnouncementPermissionWarning) {
+        hasShownAnnouncementPermissionWarning = true;
+        alert('Firestore permission denied for announcements collection.');
     }
 }
 
@@ -73,10 +84,15 @@ function toggleAnnouncementForm() {
 async function handleAnnouncementSubmit(e) {
     e.preventDefault();
 
-    const title = document.getElementById('announcement-title').value;
-    const message = document.getElementById('announcement-message').value;
+    const title = document.getElementById('announcement-title').value.trim();
+    const message = document.getElementById('announcement-message').value.trim();
     const type = document.getElementById('announcement-type').value;
     const schedule = document.getElementById('schedule-announcement')?.checked;
+
+    if (!title || !message) {
+        alert('Title and message are required.');
+        return;
+    }
     
     // Get audience
     const audienceCheckboxes = document.querySelectorAll('#announcement-form .checkbox-group input');
@@ -112,7 +128,8 @@ async function handleAnnouncementSubmit(e) {
         await fetchAnnouncements(); // Refresh list automatically
     } catch (error) {
         console.error("Error adding announcement: ", error);
-        alert("Failed to send announcement.");
+        handleAnnouncementPermissionError(error);
+        alert("Failed to send announcement: " + (error.message || 'Unknown error'));
     }
 }
 

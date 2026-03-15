@@ -22,6 +22,7 @@ This is the Flutter-based mobile and web application for the Automated Floodgate
    flutterfire configure --project=afwms-d3141
    ```
    *This will regenerate `lib/firebase_options.dart` and other platform-specific secrets.*
+4. Keep all app, admin, and CLI work on the same Firebase project: `afwms-d3141`.
 
 ### Running the App
 - **Chrome (Web):** `flutter run -d chrome`
