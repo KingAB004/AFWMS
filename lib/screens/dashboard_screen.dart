@@ -176,7 +176,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
   }
 
   Widget _buildCurrentStatusMessage() {
-    final double waterLevelM = waterHeightCm / 100;
+    final double simulatedMeters = waterHeightCm / 2.54;
     
     Color bgColor;
     Color iconColor;
@@ -184,27 +184,27 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     String title;
     String message;
 
-    if (waterLevelM >= 18) {
-      // DANGER LEVEL
+    if (simulatedMeters >= 9) {
+      // CRITICAL LEVEL
       bgColor = dangerRed.withOpacity(0.1);
       iconColor = dangerRed;
       icon = Icons.warning_rounded;
-      title = 'DANGER: CRITICAL WATER LEVEL';
-      message = 'Water levels exceed 18m. Immediate action and evacuation protocols may be required.';
-    } else if (waterLevelM >= 15) {
+      title = 'CRITICAL WATER LEVEL';
+      message = 'Water levels exceed 9 meters. Immediate action required.';
+    } else if (simulatedMeters >= 7) {
       // WARNING LEVEL
       bgColor = warningOrange.withOpacity(0.1);
       iconColor = warningOrange;
       icon = Icons.report_problem_rounded;
       title = 'WARNING: ELEVATED WATER LEVEL';
-      message = 'Water levels are between 15m and 18m. Please monitor the situation closely.';
+      message = 'Water levels are between 7 and 9 meters. Please monitor the situation closely.';
     } else {
       // NORMAL LEVEL
       bgColor = successGreen.withOpacity(0.1);
       iconColor = successGreen;
       icon = Icons.check_circle_outline_rounded;
       title = 'STATUS: NORMAL';
-      message = 'Water levels are stable below 15m. No immediate action required.';
+      message = 'Water levels are stable below 7 meters. No immediate action required.';
     }
 
     return Container(
@@ -494,7 +494,8 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
   }
 
   Widget _buildWaterLevelMonitorCard() {
-    final bool isCritical = (waterHeightCm / 100) >= 18;
+    final double simulatedMeters = waterHeightCm / 2.54;
+    final bool isCritical = simulatedMeters >= 9;
     return Container(
       padding: const EdgeInsets.all(24.0),
       decoration: BoxDecoration(
@@ -559,7 +560,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${(waterHeightCm / 100).toStringAsFixed(2)}m',
+                      '${simulatedMeters.toStringAsFixed(2)}m',
                       style: const TextStyle(
                         fontSize: 48,
                         fontWeight: FontWeight.w800,
@@ -574,13 +575,11 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       style: TextStyle(fontSize: 14, color: textSecondary, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 32),
-                    _buildLegendItem(dangerRed, 'Critical', '18m+'),
+                    _buildLegendItem(dangerRed, 'Critical', '9m+'),
                     const SizedBox(height: 12),
-                    _buildLegendItem(warningOrange, '2nd Alarm', '16-18m'),
+                    _buildLegendItem(warningOrange, 'Warning', '7-9m'),
                     const SizedBox(height: 12),
-                    _buildLegendItem(brandBlue, '1st Alarm', '15-16m'),
-                    const SizedBox(height: 12),
-                    _buildLegendItem(successGreen, 'Normal', '<15m'),
+                    _buildLegendItem(successGreen, 'Normal', '<7m'),
                   ],
                 ),
               ),
@@ -592,6 +591,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
   }
 
   Widget _buildGauge() {
+    final double simulatedMeters = waterHeightCm / 2.54;
     return Container(
       width: 48,
       height: 220,
@@ -607,7 +607,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
           AnimatedContainer(
             duration: const Duration(seconds: 1),
             curve: Curves.fastOutSlowIn,
-            height: (waterHeightCm / 100) * 11, // Max ~20m mapped to 220px
+            height: (simulatedMeters / 11) * 220, // Max 11 simulated meters mapped to 220px
             width: double.infinity,
             decoration: BoxDecoration(
               gradient: LinearGradient(
