@@ -184,20 +184,20 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     String title;
     String message;
 
-    if (simulatedMeters >= 9) {
+    if (simulatedMeters >= 8) {
       // CRITICAL LEVEL
       bgColor = dangerRed.withOpacity(0.1);
       iconColor = dangerRed;
       icon = Icons.warning_rounded;
       title = 'CRITICAL WATER LEVEL';
-      message = 'Water levels exceed 9 meters. Immediate action required.';
+      message = 'Water levels exceed 8 meters. Immediate action required.';
     } else if (simulatedMeters >= 7) {
       // WARNING LEVEL
       bgColor = warningOrange.withOpacity(0.1);
       iconColor = warningOrange;
       icon = Icons.report_problem_rounded;
       title = 'WARNING: ELEVATED WATER LEVEL';
-      message = 'Water levels are between 7 and 9 meters. Please monitor the situation closely.';
+      message = 'Water levels are between 7 and 8 meters. Please monitor the situation closely.';
     } else {
       // NORMAL LEVEL
       bgColor = successGreen.withOpacity(0.1);
@@ -495,7 +495,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
 
   Widget _buildWaterLevelMonitorCard() {
     final double simulatedMeters = waterHeightCm / 2.54;
-    final bool isCritical = simulatedMeters >= 9;
+    final bool isCritical = simulatedMeters >= 8;
     return Container(
       padding: const EdgeInsets.all(24.0),
       decoration: BoxDecoration(
@@ -575,9 +575,9 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       style: TextStyle(fontSize: 14, color: textSecondary, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 32),
-                    _buildLegendItem(dangerRed, 'Critical', '9m+'),
+                    _buildLegendItem(dangerRed, 'Critical', '8m+'),
                     const SizedBox(height: 12),
-                    _buildLegendItem(warningOrange, 'Warning', '7-9m'),
+                    _buildLegendItem(warningOrange, 'Warning', '7-8m'),
                     const SizedBox(height: 12),
                     _buildLegendItem(successGreen, 'Normal', '<7m'),
                   ],
