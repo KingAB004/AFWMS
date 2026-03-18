@@ -26,37 +26,6 @@ class _AlertsScreenState extends State<AlertsScreen> {
 
   int _refreshKey = 0; // Key to force refresh stream
 
-  void _showNotificationsDropdown() {
-    showDialog(
-      context: context,
-      barrierColor: Colors.black.withOpacity(0.2),
-      builder: (context) => Stack(
-        children: [
-          Positioned(
-            top: 60,
-            right: 16,
-            child: Material(
-              color: Colors.transparent,
-              child: const AlertsDropdown(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _refreshAlerts() {
-    setState(() {
-      _refreshKey++;
-    });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Checking for new alerts...'),
-        duration: Duration(seconds: 1),
-        backgroundColor: brandBlue,
-      ),
-    );
-  }
 
   Future<void> _deleteAllAlerts() async {
     final confirm = await showDialog<bool>(
@@ -227,22 +196,6 @@ class _AlertsScreenState extends State<AlertsScreen> {
             ],
           ),
           child: IconButton(
-            icon: const Icon(Icons.refresh_rounded),
-            onPressed: _refreshAlerts,
-            color: textPrimary,
-            iconSize: 24,
-          ),
-        ),
-        const SizedBox(width: 12),
-        Container(
-          decoration: BoxDecoration(
-            color: cardWhite,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4)),
-            ],
-          ),
-          child: IconButton(
             icon: const Icon(Icons.delete_sweep_rounded),
             onPressed: _deleteAllAlerts,
             color: dangerRed,
@@ -250,21 +203,6 @@ class _AlertsScreenState extends State<AlertsScreen> {
           ),
         ),
         const SizedBox(width: 12),
-        Container(
-          decoration: BoxDecoration(
-            color: cardWhite,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4)),
-            ],
-          ),
-          child: IconButton(
-            icon: const Icon(Icons.notifications_none_rounded),
-            onPressed: _showNotificationsDropdown,
-            color: textPrimary,
-            iconSize: 24,
-          ),
-        ),
       ],
     );
   }
@@ -296,8 +234,6 @@ class _AlertsScreenState extends State<AlertsScreen> {
               padding: EdgeInsets.all(32.0),
               child: Column(
                 children: [
-                  Icon(Icons.inbox_rounded, size: 64, color: textSecondary),
-                  SizedBox(height: 16),
                   Text('No announcements yet', style: TextStyle(color: textSecondary, fontSize: 16)),
                 ],
               ),

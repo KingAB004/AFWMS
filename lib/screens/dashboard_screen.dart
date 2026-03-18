@@ -755,33 +755,10 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
       backgroundColor: cardWhite,
       child: Column(
         children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
-            color: const Color(0xFF0F172A),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 64,
-                  height: 64,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: brandBlue.withOpacity(0.2),
-                    border: Border.all(color: brandBlue, width: 2),
-                  ),
-                  child: const Icon(Icons.person_rounded, size: 32, color: brandBlue),
-                ),
-                const SizedBox(height: 16),
-                Text(_username, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
-                const SizedBox(height: 4),
-                Text(_email, style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.7))),
-              ],
-            ),
-          ),
+          _buildDrawerHeader(),
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: 12),
               children: [
                 _buildDrawerItem(icon: Icons.person_outline_rounded, title: 'Profile', onTap: () {
                   Navigator.pop(context);
@@ -797,10 +774,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                     MaterialPageRoute(builder: (context) => const SettingsScreen()),
                   );
                 }),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                  child: Divider(),
-                ),
+                const Padding(padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8), child: Divider()),
                 _buildDrawerItem(icon: Icons.logout_rounded, title: 'Logout', onTap: () async {
                   Navigator.pop(context);
                   await AuditLogService().logEvent(
@@ -834,13 +808,123 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     );
   }
 
+  Widget _buildDrawerHeader() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return _buildDrawerHeaderContent(
+        username: _username,
+        email: _email,
+        role: _role,
+      );
+    }
+
+    return StreamBuilder<DocumentSnapshot>(
+      stream: FirebaseFirestore.instance.collection('users').doc(user.uid).snapshots(),
+      builder: (context, snapshot) {
+        String username = _username;
+        String role = _role;
+        final String email = user.email ?? _email;
+
+        if (snapshot.hasData && snapshot.data!.exists) {
+          final data = snapshot.data!.data() as Map<String, dynamic>?;
+          if (data != null) {
+            username = data['username'] ?? username;
+            role = data['role'] ?? role;
+          }
+        }
+
+        return _buildDrawerHeaderContent(
+          username: username,
+          email: email,
+          role: role,
+        );
+      },
+    );
+  }
+
+  Widget _buildDrawerHeaderContent({required String username, required String email, required String role}) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(24, 56, 24, 24),
+      color: const Color(0xFF0F172A),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 68,
+            height: 68,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white.withOpacity(0.08),
+              border: Border.all(color: brandBlue, width: 2),
+            ),
+            child: const Icon(Icons.person_rounded, size: 34, color: brandBlue),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            username,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 6),
+          Text(email, style: TextStyle(fontSize: 14, color: Colors.white.withOpacity(0.7))),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              role.toUpperCase(),
+              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.white),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildDrawerItem({required IconData icon, required String title, required VoidCallback onTap, bool isDestructive = false}) {
     final color = isDestructive ? dangerRed : textPrimary;
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 24),
-      leading: Icon(icon, color: color, size: 24),
-      title: Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: color)),
-      onTap: onTap,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(14),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: isDestructive ? dangerRed.withOpacity(0.04) : const Color(0xFFF8FAFC),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: isDestructive ? dangerRed.withOpacity(0.18) : Colors.black.withOpacity(0.05),
+              ),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(
+                    color: isDestructive ? dangerRed.withOpacity(0.12) : brandBlue.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(icon, color: color, size: 20),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: color)),
+                ),
+                Icon(Icons.chevron_right_rounded, color: textSecondary.withOpacity(0.6), size: 20),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
