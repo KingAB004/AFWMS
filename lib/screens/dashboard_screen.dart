@@ -9,7 +9,6 @@ import '../services/audit_log_service.dart';
 import '../models/weather_models.dart';
 import '../utils/weather_utils.dart';
 import 'settings_screen.dart';
-import 'profile_screen.dart';
 import 'welcome_screen.dart';
 import 'audit_logs_screen.dart';
 import '../widgets/chatbot_modal.dart';
@@ -783,15 +782,8 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
             child: ListView(
               padding: const EdgeInsets.symmetric(vertical: 12),
               children: [
-                _buildDrawerItem(icon: Icons.person_outline_rounded, title: 'Profile', onTap: () {
+                _buildDrawerItem(icon: Icons.manage_accounts_rounded, title: 'Account', onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProfileScreen()),
-                  );
-                }),
-                _buildDrawerItem(icon: Icons.settings_outlined, title: 'Settings', onTap: () {
-                  Navigator.pop(context); // close drawer
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const SettingsScreen()),
