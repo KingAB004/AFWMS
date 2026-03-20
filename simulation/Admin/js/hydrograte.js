@@ -11,8 +11,8 @@ let hydrogrates = [
         firmware: 'v2.4.1',
         serial: 'HGP-2024-001',
         sensors: 3,
-        waterLevel: 0.65,
-        maxWaterLevel: 50,
+        waterLevel: 0.0,
+        maxWaterLevel: 11,
         lastCalibration: '2026-03-01',
         nextCalibration: '2026-04-01',
         installationDate: '2024-01-15',
@@ -33,8 +33,8 @@ let hydrogrates = [
         firmware: 'v2.3.5',
         serial: 'HGP-2024-002',
         sensors: 2,
-        waterLevel: 0.45,
-        maxWaterLevel: 1.2,
+        waterLevel: 0.0,
+        maxWaterLevel: 11,
         lastCalibration: '2026-02-28',
         nextCalibration: '2026-03-28',
         installationDate: '2024-03-10',
@@ -57,8 +57,8 @@ function initHydrograteStatus() {
                 const data = snapshot.val();
                 if (hydrogrates && hydrogrates.length > 0) {
                     const mainStation = hydrogrates[0];
-                    if (data.water_height_cm !== undefined) {
-                        mainStation.waterLevel = data.water_height_cm;
+                    if (data.water_level_m !== undefined) {
+                        mainStation.waterLevel = data.water_level_m;
                     }
                     if (data.last_updated) {
                         mainStation.lastPing = data.last_updated;
