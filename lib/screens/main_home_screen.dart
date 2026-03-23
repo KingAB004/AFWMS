@@ -13,6 +13,19 @@ class MainHomeScreen extends StatefulWidget {
 
 class MainHomeScreenState extends State<MainHomeScreen> {
   int _selectedIndex = 1; // Default to Home (Center)
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _selectedIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   static final List<Widget> _widgetOptions = <Widget>[
     const AlertsScreen(),
@@ -21,16 +34,18 @@ class MainHomeScreenState extends State<MainHomeScreen> {
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (_selectedIndex == index) return;
+    
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeOutQuart,
+    );
   }
 
   // Method to navigate to home tab from child screens
   void navigateToHome() {
-    setState(() {
-      _selectedIndex = 1; // Home is at index 1
-    });
+    _onItemTapped(1);
   }
 
   @override
@@ -40,8 +55,14 @@ class MainHomeScreenState extends State<MainHomeScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      body: IndexedStack(
-        index: _selectedIndex,
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        physics: const BouncingScrollPhysics(),
         children: _widgetOptions,
       ),
       bottomNavigationBar: Container(

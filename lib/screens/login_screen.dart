@@ -6,6 +6,7 @@ import 'main_home_screen.dart';
 import '../services/auth_service.dart';
 import '../services/audit_log_service.dart';
 import '../widgets/google_logo_base64.dart';
+import '../utils/page_transitions.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const MainHomeScreen()),
+          PageTransitions.slideFadeRoute(const MainHomeScreen()),
         );
       }
     } catch (e) {
@@ -99,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const MainHomeScreen()),
+          PageTransitions.slideFadeRoute(const MainHomeScreen()),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -467,10 +468,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegistrationScreen(),
-                                ),
+                                PageTransitions.slideFadeRoute(const RegistrationScreen()),
                               );
                             },
                             child: const Text(

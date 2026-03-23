@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
+import '../utils/page_transitions.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -174,7 +175,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void _navigateToLogin() {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
+      PageTransitions.slideFadeRoute(const LoginScreen()),
     );
   }
 }

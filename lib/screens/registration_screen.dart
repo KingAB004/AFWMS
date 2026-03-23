@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'login_screen.dart';
+import '../utils/page_transitions.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -91,7 +93,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             backgroundColor: Color(0xFF10B981),
           ),
         );
-        Navigator.pop(context); // Go back to login
+        Navigator.pushReplacement(
+          context,
+          PageTransitions.slideFadeRoute(const LoginScreen()),
+        );
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
@@ -439,7 +444,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.pop(context),
+                            onTap: () => Navigator.pushReplacement(
+                              context,
+                              PageTransitions.slideFadeRoute(const LoginScreen()),
+                            ),
                             child: const Text(
                               'Login',
                               style: TextStyle(
