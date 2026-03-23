@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dashboard_screen.dart';
 import 'weather_screen.dart';
 import 'alerts_screen.dart';
+import 'settings_screen.dart';
 
 class MainHomeScreen extends StatefulWidget {
   const MainHomeScreen({super.key});
@@ -11,12 +12,12 @@ class MainHomeScreen extends StatefulWidget {
 }
 
 class MainHomeScreenState extends State<MainHomeScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1; // Default to Home (Center)
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    DashboardScreen(),
-    AlertsScreen(),
-    WeatherScreen(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const AlertsScreen(),
+    const DashboardScreen(),
+    const WeatherScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -24,52 +25,93 @@ class MainHomeScreenState extends State<MainHomeScreen> {
       _selectedIndex = index;
     });
   }
-  
+
   // Method to navigate to home tab from child screens
   void navigateToHome() {
     setState(() {
-      _selectedIndex = 0;
+      _selectedIndex = 1; // Home is at index 1
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    const primaryColor = Color(0xFF007EAA);
+    const inactiveColor = Color(0xFF94A3B8);
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC), // Modern bgLight
-      body: _widgetOptions.elementAt(_selectedIndex),
+      backgroundColor: const Color(0xFFF8FAFC),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _widgetOptions,
+      ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
-          ],
+        height: 110,
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(40),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 30,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildNavItem(0, Icons.notifications_none_rounded, Icons.notifications_rounded, 'Alerts', primaryColor, inactiveColor),
+              _buildNavItem(1, Icons.home_outlined, Icons.home_rounded, 'Home', primaryColor, inactiveColor),
+              _buildNavItem(2, Icons.cloud_outlined, Icons.cloud_rounded, 'Weather', primaryColor, inactiveColor),
+            ],
+          ),
         ),
-        child: NavigationBar(
-          selectedIndex: _selectedIndex,
-          onDestinationSelected: _onItemTapped,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          indicatorColor: const Color(0xFF0EA5E9).withOpacity(0.15),
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.home_outlined, color: Color(0xFF64748B)),
-              selectedIcon: Icon(Icons.home_rounded, color: Color(0xFF0EA5E9)),
-              label: 'Home',
+      ),
+    );
+  }
+
+  Widget _buildNavItem(int index, IconData icon, IconData activeIcon, String label, Color primaryColor, Color inactiveColor) {
+    final bool isSelected = _selectedIndex == index;
+    return GestureDetector(
+      onTap: () => _onItemTapped(index),
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        width: 80,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: isSelected ? primaryColor : Colors.transparent,
+                shape: BoxShape.circle,
+                boxShadow: isSelected ? [
+                  BoxShadow(
+                    color: primaryColor.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  )
+                ] : [],
+              ),
+              child: Icon(
+                isSelected ? activeIcon : icon,
+                color: isSelected ? Colors.white : inactiveColor,
+                size: 24,
+              ),
             ),
-            NavigationDestination(
-              icon: Icon(Icons.notifications_none_rounded, color: Color(0xFF64748B)),
-              selectedIcon: Icon(Icons.notifications_rounded, color: Color(0xFF0EA5E9)),
-              label: 'Alerts',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.cloud_queue_rounded, color: Color(0xFF64748B)),
-              selectedIcon: Icon(Icons.cloud_rounded, color: Color(0xFF0EA5E9)),
-              label: 'Weather',
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                color: isSelected ? primaryColor : inactiveColor,
+              ),
             ),
           ],
         ),
