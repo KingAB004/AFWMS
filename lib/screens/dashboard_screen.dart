@@ -237,16 +237,25 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: bgColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: iconColor.withOpacity(0.3), width: 1),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: iconColor.withOpacity(0.1), width: 1.5),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: iconColor, size: 28),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(color: iconColor.withOpacity(0.15), blurRadius: 10, offset: const Offset(0, 4)),
+              ],
+            ),
+            child: Icon(icon, color: iconColor, size: 28),
+          ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -255,18 +264,20 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w800,
                     color: iconColor,
+                    letterSpacing: 0.5,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   message,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: textPrimary,
-                    height: 1.4,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: iconColor.withOpacity(0.8),
+                    fontWeight: FontWeight.w500,
+                    height: 1.3,
                   ),
                 ),
               ],
@@ -278,50 +289,83 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
   }
 
   Widget _buildHeader() {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Builder(
-          builder: (context) => Container(
-            decoration: BoxDecoration(
-              color: cardWhite,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4)),
-              ],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Builder(
+              builder: (context) => GestureDetector(
+                onTap: () => Scaffold.of(context).openDrawer(),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 10, offset: const Offset(0, 4)),
+                    ],
+                  ),
+                  child: const Icon(Icons.menu_rounded, color: textPrimary, size: 24),
+                ),
+              ),
             ),
-            child: IconButton(
-              icon: const Icon(Icons.menu_rounded),
-              onPressed: () => Scaffold.of(context).openDrawer(),
-              color: textPrimary,
-              iconSize: 24,
+            GestureDetector(
+              onTap: _showNotificationsDropdown,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 10, offset: const Offset(0, 4)),
+                  ],
+                ),
+                child: Stack(
+                  children: [
+                    const Icon(Icons.notifications_none_rounded, color: textPrimary, size: 24),
+                    Positioned(
+                      right: 2,
+                      top: 2,
+                      child: Container(
+                        width: 8,
+                        height: 8,
+                        decoration: const BoxDecoration(
+                          color: dangerRed,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-        const Expanded(
-          child: Text(
-            'Dashboard',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: textPrimary,
-              letterSpacing: -0.5,
-            ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: cardWhite,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4)),
+        const SizedBox(height: 24),
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Welcome Back, ',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: textSecondary,
+                  letterSpacing: -0.2,
+                ),
+              ),
+              TextSpan(
+                text: '${_username.split(' ')[0]}!',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                  color: textPrimary,
+                  letterSpacing: -0.3,
+                ),
+              ),
             ],
-          ),
-          child: IconButton(
-            icon: const Icon(Icons.notifications_none_rounded),
-            onPressed: _showNotificationsDropdown,
-            color: textPrimary,
-            iconSize: 24,
           ),
         ),
       ],
@@ -331,7 +375,6 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
   Widget _buildEmergencyFloodgateControl() {
     final Color statusColor = isGateOpen ? brandBlue : dangerRed;
     final String statusText = isGateOpen ? 'GATE OPEN: FLOW ACTIVE' : 'GATE CLOSED: FLOW BLOCKED';
-    final String subText = isGateOpen ? 'System operating normally' : 'EMERGENCY: Restricted Flow';
 
     return Container(
       width: double.infinity,
@@ -341,26 +384,25 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: statusColor.withOpacity(0.4),
+            color: statusColor.withOpacity(0.3),
             blurRadius: 20,
-            offset: const Offset(0, 8),
+            offset: const Offset(0, 10),
           ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.warning_amber_rounded, color: Colors.white, size: 20),
+              const Icon(Icons.security_rounded, color: Colors.white, size: 18),
               const SizedBox(width: 8),
               Text(
                 'EMERGENCY CONTROL',
                 style: TextStyle(
-                  fontSize: 13,
+                  fontSize: 12,
                   fontWeight: FontWeight.w800,
-                  letterSpacing: 1.5,
+                  letterSpacing: 1.2,
                   color: Colors.white.withOpacity(0.9),
                 ),
               ),
@@ -371,36 +413,19 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
             animation: _pulseAnimation,
             builder: (context, child) {
               return AnimatedScale(
-                scale: _isButtonDown ? 0.90 : (isGateOpen ? 1.0 : _pulseAnimation.value),
+                scale: _isButtonDown ? 0.92 : (isGateOpen ? 1.0 : _pulseAnimation.value),
                 duration: const Duration(milliseconds: 150),
-                curve: Curves.easeOutQuad,
                 child: Container(
-                  width: 140,
-                  height: 140,
+                  width: 130,
+                  height: 130,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Colors.white, Color(0xFFF1F5F9)], // Slight gradient for 3D effect
-                    ),
-                    boxShadow: _isButtonDown ? [
-                      BoxShadow( // Pressed state shadow
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 5,
-                        offset: const Offset(0, 2),
-                      ),
-                    ] : [
-                      BoxShadow( // Normal state drop shadow
-                        color: Colors.black.withOpacity(0.2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.15),
                         blurRadius: 15,
                         offset: const Offset(0, 8),
-                      ),
-                      const BoxShadow( // Inner highlight shadow effect
-                        color: Colors.white,
-                        blurRadius: 5,
-                        offset: Offset(-2, -2),
                       ),
                     ],
                   ),
@@ -413,26 +438,23 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       onHighlightChanged: (isHighlighted) {
                         setState(() => _isButtonDown = isHighlighted);
                       },
-                      splashColor: statusColor.withOpacity(0.2),
-                      highlightColor: statusColor.withOpacity(0.1),
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              isGateOpen ? Icons.water : Icons.block,
+                              isGateOpen ? Icons.water_drop_rounded : Icons.block_flipped,
                               size: 40,
                               color: statusColor,
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 8),
                             Text(
-                              isGateOpen ? 'CLOSE\nGATE' : 'RAISE\nGATE',
+                              isGateOpen ? 'CLOSE\nGATE' : 'OPEN\nGATE',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w900,
                                 height: 1.1,
-                                letterSpacing: 0.5,
                                 color: statusColor,
                               ),
                             ),
@@ -444,6 +466,16 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 ),
               );
             },
+          ),
+          const SizedBox(height: 20),
+          Text(
+            statusText,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+              letterSpacing: 0.5,
+            ),
           ),
         ],
       ),
@@ -543,7 +575,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
         color: cardWhite,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 20, offset: const Offset(0, 10)),
+          BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 20, offset: const Offset(0, 10)),
         ],
       ),
       child: Column(
@@ -556,14 +588,15 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 'Water Level',
                 style: TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                   color: textPrimary,
+                  letterSpacing: -0.3,
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: isCritical ? dangerRed.withOpacity(0.1) : successGreen.withOpacity(0.1),
+                  color: (waterLevelM >= 18.0 ? dangerRed : (waterLevelM >= 15.0 ? warningOrange : successGreen)).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
@@ -573,16 +606,16 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       width: 8, height: 8,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: isCritical ? dangerRed : successGreen,
+                        color: waterLevelM >= 18.0 ? dangerRed : (waterLevelM >= 15.0 ? warningOrange : successGreen),
                       ),
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      waterLevelStatus.toUpperCase(),
+                      (waterLevelM >= 18.0 ? 'CRITICAL' : (waterLevelM >= 15.0 ? 'CAUTION' : 'SAFE')),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: isCritical ? dangerRed : successGreen,
+                        color: waterLevelM >= 18.0 ? dangerRed : (waterLevelM >= 15.0 ? warningOrange : successGreen),
                       ),
                     ),
                   ],
@@ -655,8 +688,8 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
                 colors: [
-                  brandBlue,
-                  brandBlue.withOpacity(0.8),
+                  (simulatedMeters >= 18.0 ? dangerRed : (simulatedMeters >= 15.0 ? warningOrange : brandBlue)),
+                  (simulatedMeters >= 18.0 ? dangerRed : (simulatedMeters >= 15.0 ? warningOrange : brandBlue)).withOpacity(0.8),
                 ],
               ),
               borderRadius: BorderRadius.circular(24),
