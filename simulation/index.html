@@ -528,7 +528,7 @@
                     <div class="card-icon">💧</div>
                     <span class="card-title">Water Level Monitor</span>
                 </div>
-                <div id="level-num" class="level-value">15.2cm</div>
+                <div id="level-num" class="level-value">0.152m</div>
 
                 <div class="gauge-section">
                     <div class="vertical-gauge">
@@ -542,15 +542,15 @@
                     <div class="legend-vertical">
                         <div class="legend-item">
                             <div class="color-box" style="background: #E53935;"></div>
-                            <span>Critical (18cm+)</span>
+                            <span>Critical (0.18m+)</span>
                         </div>
                         <div class="legend-item">
                             <div class="color-box" style="background: #FF8A00;"></div>
-                            <span>Caution (16-17cm)</span>
+                            <span>Caution (0.15-0.18m)</span>
                         </div>
                         <div class="legend-item">
                             <div class="color-box" style="background: #FFC107;"></div>
-                            <span>Normal (&lt;15cm)</span>
+                            <span>Normal (&lt;0.15m)</span>
                         </div>
                     </div>
                 </div>
@@ -601,10 +601,10 @@
             <input type="range" id="level-slider" min="0" max="20" step="0.1" value="15.2">
             <div
                 style="display: flex; justify-content: space-between; font-size: 10px; margin-top: 4px; color: #94A3B8;">
-                <span>0cm</span>
-                <span>15cm</span>
-                <span>18cm</span>
-                <span>20cm</span>
+                <span>0m</span>
+                <span>0.15m</span>
+                <span>0.18m</span>
+                <span>0.20m</span>
             </div>
         </div>
     </div>
@@ -639,7 +639,7 @@
         });
 
         function updateUI(level) {
-            levelNum.innerText = `${level.toFixed(1)}cm`;
+            levelNum.innerText = `${(level / 100).toFixed(3)}m`;
 
             // Gauge height
             const heightPercent = (level / 20) * 100;

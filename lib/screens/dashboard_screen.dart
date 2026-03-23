@@ -601,7 +601,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${simulatedMeters.toStringAsFixed(2)}cm',
+                      '${(simulatedMeters / 100).toStringAsFixed(3)}m',
                       style: const TextStyle(
                         fontSize: 48,
                         fontWeight: FontWeight.w800,
@@ -616,11 +616,11 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       style: TextStyle(fontSize: 14, color: textSecondary, fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: 32),
-                    _buildLegendItem(dangerRed, 'Critical', '18cm+'),
+                    _buildLegendItem(dangerRed, 'Critical', '0.18m+'),
                     const SizedBox(height: 12),
-                    _buildLegendItem(warningOrange, 'Caution', '15-18cm'),
+                    _buildLegendItem(warningOrange, 'Caution', '0.15-0.18m'),
                     const SizedBox(height: 12),
-                    _buildLegendItem(successGreen, 'Normal', '<15cm'),
+                    _buildLegendItem(successGreen, 'Normal', '<0.15m'),
                   ],
                 ),
               ),
