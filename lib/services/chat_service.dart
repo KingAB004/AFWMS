@@ -35,10 +35,9 @@ Current Flood Monitoring Status:
 - Last Updated: $lastUpdated
 
 Water Level Thresholds:
-- Normal: 15.0 and below
-- Caution: 15.1 to 17.9
-- Critical: 18.0 and above
-(All values in centimeters)
+- Normal: 15.0m and below
+- Caution: 15.1m to 17.9m
+- Critical: 18.0m and above
 ''';
     }
 

@@ -528,7 +528,7 @@
                     <div class="card-icon">💧</div>
                     <span class="card-title">Water Level Monitor</span>
                 </div>
-                <div id="level-num" class="level-value">0.152m</div>
+                <div id="level-num" class="level-value">15.2m</div>
 
                 <div class="gauge-section">
                     <div class="vertical-gauge">
@@ -639,7 +639,7 @@
         });
 
         function updateUI(level) {
-            levelNum.innerText = `${(level / 100).toFixed(3)}m`;
+            levelNum.innerText = `${level.toFixed(1)}m`;
 
             // Gauge height
             const heightPercent = (level / 20) * 100;
