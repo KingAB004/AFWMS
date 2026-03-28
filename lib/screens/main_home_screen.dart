@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dashboard_screen.dart';
 import 'weather_screen.dart';
 import 'alerts_screen.dart';
-import 'settings_screen.dart';
+import '../widgets/assistive_touch.dart';
 
 class MainHomeScreen extends StatefulWidget {
   const MainHomeScreen({super.key});
@@ -53,40 +53,42 @@ class MainHomeScreenState extends State<MainHomeScreen> {
     const primaryColor = Color(0xFF007EAA);
     const inactiveColor = Color(0xFF94A3B8);
 
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        physics: const BouncingScrollPhysics(),
-        children: _widgetOptions,
-      ),
-      bottomNavigationBar: Container(
-        height: 110,
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(40),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.08),
-                blurRadius: 30,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildNavItem(0, Icons.notifications_none_rounded, Icons.notifications_rounded, 'Alerts', primaryColor, inactiveColor),
-              _buildNavItem(1, Icons.home_outlined, Icons.home_rounded, 'Home', primaryColor, inactiveColor),
-              _buildNavItem(2, Icons.cloud_outlined, Icons.cloud_rounded, 'Weather', primaryColor, inactiveColor),
-            ],
+    return AssistiveTouch(
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8FAFC),
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          physics: const BouncingScrollPhysics(),
+          children: _widgetOptions,
+        ),
+        bottomNavigationBar: Container(
+          height: 110,
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(40),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.08),
+                  blurRadius: 30,
+                  offset: const Offset(0, 10),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildNavItem(0, Icons.notifications_none_rounded, Icons.notifications_rounded, 'Alerts', primaryColor, inactiveColor),
+                _buildNavItem(1, Icons.home_outlined, Icons.home_rounded, 'Home', primaryColor, inactiveColor),
+                _buildNavItem(2, Icons.cloud_outlined, Icons.cloud_rounded, 'Weather', primaryColor, inactiveColor),
+              ],
+            ),
           ),
         ),
       ),

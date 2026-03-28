@@ -1,0 +1,216 @@
+﻿Analyzing Hydro-Gate-Iot...                                     
+
+warning - Unused import: '../widgets/alerts_dropdown.dart' - lib\screens\alerts_screen.dart:4:8 - unused_import
+   info - The private field _refreshKey could be 'final' - lib\screens\alerts_screen.dart:28:7 - prefer_final_fields
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:162:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:198:45 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\screens\alerts_screen.dart:330:40 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:465:77 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:506:27 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:507:31 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:508:31 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:513:31 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:514:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:515:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:520:26 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:521:30 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:522:30 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:527:30 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:528:34 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\alerts_screen.dart:529:34 - deprecated_member_use
+   info - Unnecessary escape in string literal - lib\screens\alerts_screen.dart:541:15 - unnecessary_string_escapes
+   info - Unnecessary escape in string literal - lib\screens\alerts_screen.dart:543:15 - unnecessary_string_escapes
+   info - Unnecessary escape in string literal - lib\screens\alerts_screen.dart:545:15 - unnecessary_string_escapes
+   info - Unnecessary use of multiple underscores - lib\screens\audit_logs_screen.dart:80:35 - unnecessary_underscores
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\audit_logs_screen.dart:97:51 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\audit_logs_screen.dart:100:43 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\audit_logs_screen.dart:114:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:140:34 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:198:27 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:205:31 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:212:30 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:225:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:235:44 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:259:38 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:288:53 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:303:51 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:368:32 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:387:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:407:45 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\screens\dashboard_screen.dart:511:42 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\screens\dashboard_screen.dart:527:42 - use_build_context_synchronously
+warning - The value of the local variable 'isCritical' isn't used - lib\screens\dashboard_screen.dart:552:16 - unused_local_variable
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:559:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:580:115 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:656:47 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:673:113 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:687:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:735:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:746:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:780:88 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps, guarded by an unrelated 'mounted' check - lib\screens\dashboard_screen.dart:820:23 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:889:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:902:74 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:907:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:932:48 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:935:50 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:935:83 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:944:54 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:944:84 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\dashboard_screen.dart:953:72 - deprecated_member_use
+   info - Don't use 'BuildContext's across async gaps - lib\screens\login_screen.dart:46:11 - use_build_context_synchronously
+   info - Don't use 'BuildContext's across async gaps - lib\screens\login_screen.dart:102:11 - use_build_context_synchronously
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\login_screen.dart:182:64 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\login_screen.dart:375:57 - deprecated_member_use
+warning - Unused import: 'settings_screen.dart' - lib\screens\main_home_screen.dart:5:8 - unused_import
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\main_home_screen.dart:79:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\main_home_screen.dart:119:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\registration_screen.dart:167:64 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\registration_screen.dart:414:57 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\settings_screen.dart:235:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\settings_screen.dart:256:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\settings_screen.dart:298:46 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\settings_screen.dart:340:40 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\settings_screen.dart:352:42 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\settings_screen.dart:480:35 - deprecated_member_use
+   info - 'activeColor' is deprecated and shouldn't be used. Use activeThumbColor or activeTrackColor instead. This feature was deprecated after v3.31.0-2.0.pre - lib\screens\settings_screen.dart:569:63 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\splash_screen.dart:76:49 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\splash_screen.dart:89:51 - deprecated_member_use
+warning - The value of the field 'primaryGradientStart' isn't used - lib\screens\weather_screen.dart:28:22 - unused_field
+warning - The value of the field 'primaryGradientEnd' isn't used - lib\screens\weather_screen.dart:29:22 - unused_field
+   info - The private field _cityName could be 'final' - lib\screens\weather_screen.dart:37:10 - prefer_final_fields
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:73:34 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:136:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:168:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:212:45 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:214:38 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:222:32 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:289:30 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:304:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:316:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:386:39 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:393:73 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:395:73 - deprecated_member_use
+   info - Unnecessary use of multiple underscores - lib\screens\weather_screen.dart:461:37 - unnecessary_underscores
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:471:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:513:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:522:36 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:560:41 - deprecated_member_use
+   info - Unnecessary use of 'toList' in a spread - lib\screens\weather_screen.dart:600:14 - unnecessary_to_list_in_spreads
+warning - The declaration '_buildForecastList' isn't referenced - lib\screens\weather_screen.dart:606:10 - unused_element
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:625:37 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\weather_screen.dart:630:51 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\welcome_screen.dart:65:49 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\welcome_screen.dart:75:55 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\screens\welcome_screen.dart:128:86 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\services\announcement_listener_service.dart:35:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\announcement_listener_service.dart:71:9 - avoid_print
+  error - Expected to find ';' - lib\services\announcement_listener_service.dart:71:15 - expected_token
+  error - Unterminated string literal - lib\services\announcement_listener_service.dart:71:49 - unterminated_string_literal
+  error - Expected to find ')' - lib\services\announcement_listener_service.dart:72:7 - expected_token
+   info - Don't invoke 'print' in production code - lib\services\announcement_listener_service.dart:74:7 - avoid_print
+  error - Expected to find ';' - lib\services\announcement_listener_service.dart:74:13 - expected_token
+  error - Unterminated string literal - lib\services\announcement_listener_service.dart:74:54 - unterminated_string_literal
+  error - Expected to find ')' - lib\services\announcement_listener_service.dart:75:5 - expected_token
+   info - Don't invoke 'print' in production code - lib\services\announcement_listener_service.dart:108:16 - avoid_print
+warning - Unnecessary cast - lib\services\announcement_listener_service.dart:113:26 - unnecessary_cast
+   info - Don't invoke 'print' in production code - lib\services\announcement_listener_service.dart:123:13 - avoid_print
+   info - Unnecessary escape in string literal - lib\services\announcement_listener_service.dart:123:54 - unnecessary_string_escapes
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:65 - expected_token
+  error - Too many positional arguments: 1 expected, but 15 found - lib\services\announcement_listener_service.dart:123:65 - extra_positional_arguments
+  error - Undefined name 'head' - lib\services\announcement_listener_service.dart:123:65 - undefined_identifier
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:69 - expected_token
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:274 - expected_token
+  error - Undefined name 'grep' - lib\services\announcement_listener_service.dart:123:274 - undefined_identifier
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:278 - expected_token
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:483 - expected_token
+  error - Undefined name 'Y' - lib\services\announcement_listener_service.dart:123:483 - undefined_identifier
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:484 - expected_token
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:736 - expected_token
+  error - Undefined name 'Chord' - lib\services\announcement_listener_service.dart:123:736 - undefined_identifier
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:741 - expected_token
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:801 - expected_token
+  error - Undefined name 'Chord' - lib\services\announcement_listener_service.dart:123:801 - undefined_identifier
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:806 - expected_token
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:866 - expected_token
+  error - Undefined name 'Chord' - lib\services\announcement_listener_service.dart:123:866 - undefined_identifier
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:871 - expected_token
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:931 - expected_token
+  error - Undefined name 'Chord' - lib\services\announcement_listener_service.dart:123:931 - undefined_identifier
+  error - Expected to find ',' - lib\services\announcement_listener_service.dart:123:936 - expected_token
+   info - Don't invoke 'print' in production code - lib\services\announcement_listener_service.dart:141:7 - avoid_print
+  error - Expected to find ';' - lib\services\announcement_listener_service.dart:141:13 - expected_token
+  error - Unterminated string literal - lib\services\announcement_listener_service.dart:141:48 - unterminated_string_literal
+  error - Expected to find ')' - lib\services\announcement_listener_service.dart:142:7 - expected_token
+   info - Don't invoke 'print' in production code - lib\services\announcement_listener_service.dart:154:5 - avoid_print
+  error - Expected to find ';' - lib\services\announcement_listener_service.dart:154:11 - expected_token
+   info - Unnecessary escape in string literal - lib\services\announcement_listener_service.dart:154:34 - unnecessary_string_escapes
+  error - Unterminated string literal - lib\services\announcement_listener_service.dart:154:41 - unterminated_string_literal
+  error - Expected to find ')' - lib\services\announcement_listener_service.dart:156:5 - expected_token
+   info - Don't invoke 'print' in production code - lib\services\announcement_listener_service.dart:195:5 - avoid_print
+  error - Unterminated string literal - lib\services\announcement_listener_service.dart:204:26 - unterminated_string_literal
+  error - Expected to find '}' - lib\services\announcement_listener_service.dart:205:22 - expected_token
+  error - Unterminated string literal - lib\services\announcement_listener_service.dart:214:26 - unterminated_string_literal
+  error - Expected to find '}' - lib\services\announcement_listener_service.dart:215:22 - expected_token
+  error - Unterminated string literal - lib\services\announcement_listener_service.dart:224:26 - unterminated_string_literal
+  error - Expected to find '}' - lib\services\announcement_listener_service.dart:225:22 - expected_token
+   info - Don't invoke 'print' in production code - lib\services\announcement_listener_service.dart:236:5 - avoid_print
+  error - Expected to find ';' - lib\services\announcement_listener_service.dart:236:11 - expected_token
+  error - Unterminated string literal - lib\services\announcement_listener_service.dart:236:36 - unterminated_string_literal
+  error - Expected to find ')' - lib\services\announcement_listener_service.dart:237:3 - expected_token
+   info - Don't invoke 'print' in production code - lib\services\announcement_listener_service.dart:243:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\auth_service.dart:53:7 - avoid_print
+warning - The value of the local variable 'waterHeightCm' isn't used - lib\services\chat_service.dart:24:13 - unused_local_variable
+   info - Don't invoke 'print' in production code - lib\services\weather_service.dart:10:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\weather_service.dart:12:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\weather_service.dart:16:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\weather_service.dart:19:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\weather_service.dart:42:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\weather_service.dart:44:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\weather_service.dart:48:9 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\weather_service.dart:51:9 - avoid_print
+   info - Parameter 'key' could be a super parameter - lib\user\announcements_screen.dart:8:9 - use_super_parameters
+   info - Parameter 'key' could be a super parameter - lib\user\announcements_screen.dart:93:9 - use_super_parameters
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\user\announcements_screen.dart:119:33 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\user\announcements_screen.dart:141:59 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\alerts_dropdown.dart:29:33 - deprecated_member_use
+   info - Unnecessary escape in string literal - lib\widgets\alerts_dropdown.dart:235:15 - unnecessary_string_escapes
+   info - Unnecessary escape in string literal - lib\widgets\alerts_dropdown.dart:237:15 - unnecessary_string_escapes
+   info - Unnecessary escape in string literal - lib\widgets\alerts_dropdown.dart:239:15 - unnecessary_string_escapes
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\assistive_touch.dart:144:60 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\assistive_touch.dart:150:49 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\assistive_touch.dart:156:58 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\chatbot_modal.dart:119:30 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\chatbot_modal.dart:143:36 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\chatbot_modal.dart:257:41 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\chatbot_modal.dart:315:47 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\chatbot_modal.dart:338:30 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\chatbot_modal.dart:355:35 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\chatbot_modal.dart:369:57 - deprecated_member_use
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss - lib\widgets\chatbot_modal.dart:403:40 - deprecated_member_use
+
+flutter : 188 
+issues found. 
+(ran in 6.5s)
+At line:1 char:1
++ flutter analyze 
+2>&1 | Out-File 
+-FilePath analyze_
+results.txt 
+-Encodi ...
++ ~~~~~~~~~~~~~~~~
+~~~~
+    + 
+CategoryInfo      
+        : NotSpe  
+  cified: (188 
+iss    ues found. 
+(ran     in 
+6.5s):String)     
+[], RemoteExcep   
+ tion
+    + 
+FullyQualified    
+ErrorId : Native  
+  CommandError
+ 

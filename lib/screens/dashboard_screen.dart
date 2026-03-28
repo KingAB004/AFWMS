@@ -11,7 +11,7 @@ import '../utils/weather_utils.dart';
 import 'settings_screen.dart';
 import 'welcome_screen.dart';
 import 'audit_logs_screen.dart';
-import '../widgets/chatbot_modal.dart';
+
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -158,8 +158,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     return Scaffold(
       backgroundColor: bgLight,
       drawer: _buildDrawer(),
-      floatingActionButton: _buildChatbotFAB(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -183,25 +182,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     );
   }
 
-  Widget _buildChatbotFAB() {
-    return FloatingActionButton.extended(
-      onPressed: () {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          backgroundColor: Colors.transparent,
-          builder: (context) => const ChatbotModal(),
-        );
-      },
-      backgroundColor: brandBlue,
-      elevation: 6,
-      icon: const Icon(Icons.smart_toy_rounded, color: Colors.white),
-      label: const Text(
-        'AI Assistant',
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
+
 
   Widget _buildCurrentStatusMessage() {
     final double simulatedMeters = waterLevelM;
