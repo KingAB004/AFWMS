@@ -10,7 +10,7 @@ class ChatService {
 
   // Lazily initializes the model and chat session with live context
   Future<void> _initializeChat() async {
-    final apiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
+    final apiKey = (dotenv.env['GEMINI_API_KEY'] ?? '').trim();
     if (apiKey.isEmpty) {
       throw Exception('Gemini API key is not configured in .env file.');
     }
