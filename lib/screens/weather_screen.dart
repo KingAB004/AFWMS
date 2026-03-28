@@ -5,6 +5,8 @@ import '../services/weather_service.dart';
 import '../models/weather_models.dart';
 import '../utils/weather_utils.dart';
 import 'main_home_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../widgets/chatbot_modal.dart';
 
 
 class WeatherScreen extends StatefulWidget {
